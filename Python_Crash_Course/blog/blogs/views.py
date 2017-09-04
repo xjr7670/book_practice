@@ -27,7 +27,7 @@ def new_blog(request):
         form = BlogForm(request.POST)
         if form.is_valid():
             new_post = form.save(commit=False)
-            new_post.user = request.user
+            new_post.owner = request.user
             new_post.save()
             return HttpResponseRedirect(reverse('blogs:index'))
 
@@ -40,7 +40,7 @@ def edit_post(request, post_id):
 
     post = BlogPost.objects.get(id=post_id)
     # 检查用户
-    check_post_owner(post.owner, rerquest.user)
+    check_post_owner(post.owner, request.user)
 
     if request.method != "POST":
         # 如果是初次请求，即刚打开编辑页面

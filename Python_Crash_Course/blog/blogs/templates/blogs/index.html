@@ -1,21 +1,33 @@
 {% extends "blogs/base.html" %}
 
+{% block header %}
+    <div class="jumbotron">
+        <h1>All posts</h1>
+    </div>
+{% endblock header %}
+
 {% block content %}
 
     <p>
-        All posts -- <a href="{% url 'blogs:new_blog' %}">new post</a>
+        <a href="{% url 'blogs:new_blog' %}">new post</a>
     </p>
 
-    <ul>
-        {% for post in posts %}
-        <li>
-            <p>{{ post.title }} &nbsp;&nbsp;</p>
-            {{ post.text }}
-            <a href="{% url 'blogs:edit_post' post.id %}"><i>Edit</i></a>
-        </li>
-        {% empty %}
-        <p>There are no post yet.</p>
-        {% endfor %}
-    </ul>
+    {% for post in posts %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3>
+                {{ post.title }}
+                <small>
+                    <a href="{% url 'blogs:edit_post' post.id %}">edit</a>
+                </small>
+            </h3>
+        </div>
+        <div class="panel-body">
+            {{ post.text|linebreaks }}
+        </div>
+    </div>
+    {% empty %}
+    <p>There are not post yet.</p>
+    {% endfor %}
 
 {% endblock content %}
