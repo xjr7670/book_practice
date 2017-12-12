@@ -145,7 +145,7 @@ def drawdendrogram(clust, labels, jpeg='clusters.jpg'):
 def drawnode(draw, clust, x, y, scaling, labels):
     if clust.id < 0:
         h1 = getheight(clust.left) * 20
-        h2 = gethieght(clust.right) * 20
+        h2 = getheight(clust.right) * 20
         top = y - (h1 + h2) / 2
         bottom = y + (h1 + h2) / 2
         # 线的长度
@@ -165,3 +165,10 @@ def drawnode(draw, clust, x, y, scaling, labels):
     else:
         # 如果这是一个叶节点，则绘制节点的标签
         draw.text((x+5, y-7), labels[clust.id], (0, 0, 0))
+
+def rotatematrix(data):
+    newdata = []
+    for i in range(len(data[0])):
+        newrow = [data[j][i] for j in range(len(data))]
+        newdata.append(newrow)
+    return newdata
