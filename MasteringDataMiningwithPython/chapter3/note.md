@@ -56,3 +56,153 @@ F1 = 2 * ((精度 x 召回率)) / (精度 + 召回率)
 **P60页**
 
 在这页开始的`for`循环语句，它包含的范围一直到62页的`db.close()`的上一句。而后面的`soundex()`函数应该放在前面
+
+
+
+### 代理理解
+
+
+```
+# 为了方便起见，每次执行时，我都会先清空结果表，否则重复插入关键值列会报错
+cursor.execute("""TRUNCATE TABLE book_entity_matches""")
+
+# 下面这行SQL是把RF和RG中相同URL的项目的名字取出来，放到结果表中
+cursor.execute("""INSERT INTO book_entity_matches (
+                  rf_project_name, rg_project_name)
+                  SELECT rf.project_name, rg.project_name
+                  FROM rfrg.book_rf_entities rf
+                  INNER JOIN rfrg.book_rg_entities rg
+                  ON rf.url = rg.url""")
+
+# 下面这行SQL是把RF和RG中相同名字的项目的名字取出来，放到结果表中
+# 同时这些名字应该是不在上一个SQL查询结果中的
+cursor.execute("""INSERT INTO book_entity_matches (
+                  rf_project_name, rg_project_name)
+                  SELECT rf.project_name, rg.project_name
+                  FROM rfrg.book_rf_entities rf
+                  INNER JOIN book_rg_entities rg
+                  ON rf.project_name = rg.project_name
+                  WHERE rf.project_name NOT IN (
+                      SELECT bem.rf_project_name
+                      FROM book_entity_matches bem)""")
+
+# 下面这行SQL把前面两个SQL查询得到的来自两边的项目名称取出
+# 同时根据它们的名称在原项目表中取得对应的URL
+cursor.execute("""SELECT bem.rf_project_name, bem.rg_project_name, rfe.url, rfe.url
+                  FROM rfrg.book_entity_matches bem
+                  INNER JOIN rfrg.book_rg_entities rge
+                  ON bem.rg_project_name = rge.project_name
+                  INNER JOIN rfrg.book_rf_entities rfe
+                  ON bem.rf_project_name = rfe.project_name
+                  ORDER BY bem.rf_project_name""")
+projectPairs = cursor.fetchall()
+
+
+# 下面对每个名称、URL对进行比较
+for (projectPair) in projectPairs:
+    RFname = projectPair[0]
+    RGname = projectPair[1]
+    RFurl = projectPair[2]
+    RGurl = projectPair[3]
+
+    # lowercase everything
+    RFnameLC = RFname.lower()
+    RGnameLC = RGname.lower()
+    RFurlLC = RFurl.lower()
+    RGurlLC = RGurl.lower()
+
+    # 计算项目名称和URL的编辑距离
+    levNames = edit_distance(RFnameLC, RGnameLC)
+    levURLs = edit_distance(RFurlLC, RGurlLC)
+    soundexRFname = soundex(RFnameLC)
+    soundexRGname = soundex(RGnameLC)
+
+    # 如果RF中的项目名字在RG项目中出现了
+    # 则把rf_in_rg设置为1，否则为0
+    if RFnameLC in RGnameLC:
+        rf_in_rg = 1
+    else:
+        rf_in_rg = 0
+
+    # 如果RF中的URl在RG项目中出现了
+    # 则把rf_in_rgurl设置为1，否则为0
+    if RFnameLC in RGurl:
+        rf_in_rgurl = 1
+    else:
+        rf_in_rgurl = 0
+
+
+    # 根据RG项目开发者名称在RF表中提取开发者名称
+    cursor.execute("""SELECT rf.dev_username, rf.dev_realname
+                      FROM rfrg.book_rf_entity_people rf
+                      WHERE rf.project_name = %s
+                      AND (rf.dev_username IN (
+                          SELECT rg.person_name
+                          FROM rfrg.book_rg_entity_people rg
+                          WHERE rg.project_name = %s)
+                          OR rf.dev_realname IN (
+                          SELECT rg.person_name
+                          FROM rfrg.book_rg_entity_people rg
+                          WHERE rg.project_name = %s))""",
+                          (RFname, RGname, RGname))
+
+    result = cursor.fetchone()
+    # 如果不为空，说明两者有相同的开发者
+    # 则把rfdev_in_rgdev设置为1，否则为0
+    if result is not None:
+        rfdev_in_rgdev = 1
+    else:
+        rfdev_in_rgdev = 0
+
+
+    # 把前面得到的各个标记值更新到结果表中
+    # （这样是方便后面的效果检查）
+    cursor.execute("UPDATE book_entity_matches \
+                      SET rf_name_soundex = %s, \
+                          rg_name_soundex = %s, \
+                          url_levenshtein = %s, \
+                          name_levenshtein = %s, \
+                          rf_name_in_rg_name = %s, \
+                          rf_name_in_rg_url = %s, \
+                          rf_dev_in_rg_dev = %s \
+                      WHERE rf_project_name = %s \
+                      AND rg_project_name = %s", 
+                      (soundexRFname, soundexRGname, levURLs, levNames, rf_in_rg, rf_in_rgurl, rfdev_in_rgdev, RFname, RGname))
+
+```
+
+#### soundex函数解释
+
+这个函数是返回一个单词的声索引。依据是P47中的表。最后把元音和W、Y、H给去掉。<br />
+基本原理是设置一个英文字母到数字的映射表。代码中的`digits`列表实现了这个映射
+
+```
+def soundex(name, len=4):
+
+    # 设置好字母到数字的映射
+    digits = '01230120022455012623010202'
+    sndx = ''
+    fc = ''
+
+    # 这个for循环把名字中的每个字母变换成对应的声索引的数字
+    for c in name.upper():
+        if c.isalpha():
+            if not fc:
+                fc = c      # 把首字母保存下来
+            d = digits[ord(c) - ord('A')]   # 根据ASCII码作匹配
+
+            # 如果连续出现两个重复的字母，那么把后一个直接去掉
+            # if判断后面的 d != sndx[-1] 实现这个功能
+            if not sndx or (d != sndx[-1]):
+                sndx += d
+
+    # 把前面保存下来的首字母和后面计算得到的数字连接起来
+    sndx = fc + sndx[1:]
+
+    # 把0去掉
+    sndx = sndx.replace('0', '')
+
+    # return soundex code padded to len characters
+    return (sndx + (len * '0'))[:len]
+```
+
