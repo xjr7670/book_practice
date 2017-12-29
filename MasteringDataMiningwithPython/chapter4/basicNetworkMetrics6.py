@@ -9,12 +9,12 @@ Created on Thu Dec 28 22:13:31 2017
 import operator
 import networkx as nx
 
-g = nx.read_weighted_edgelist('data/edgelist12987.csv')
+g = nx.read_weighted_edgelist('data/edgelist24.csv')
 
 graphs = list(nx.connected_component_subgraphs(g))
-graphs = sorted(graphs, key=operator.itemgetter(1), reverse=True)
+
 conncomp = graphs[0]
-ego = nx.Graph(nx.ego_graph(conncomp, 'tirsen', radius=3))
+ego = nx.Graph(nx.ego_graph(conncomp, 'rich', radius=3))
 graphDegree = nx.degree(ego)
 pos = nx.spring_layout(ego)
 
@@ -26,6 +26,6 @@ nx.draw(ego,
         font_size=8)
 nx.draw_networkx_nodes(ego,
                        pos,
-                       nodelist=['tirsen'],
+                       nodelist=['rich'],
                        node_size=300,
                        node_color='g')
