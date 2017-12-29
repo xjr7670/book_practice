@@ -30,3 +30,8 @@
 **P92**
 
 新版本的networkx包中的`degree`对象已经不包含`values`函数，通过`nx.degree(g)`返回的是一个`DegreeView`对象，它内部的数据结构类型于字典，可以通过`for k, v in nx.degree(g)`这样的形式来迭代，但是它并不包含任何方法。
+
+
+**P104**
+
+`basicNetworkMetrics6.py`中除了`graphDegree.values()`要改之外，人名`tirsen`也是要改的。作者在书的代码里面用的是`rich`而不是`tirsen`。此外读取的文件也不是edgelist12987.csv而是edgelist24.csv。P105页中7.py也是
