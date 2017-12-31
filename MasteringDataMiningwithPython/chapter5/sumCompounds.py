@@ -29,5 +29,5 @@ for channel in listOfChannels:
         ss = sid.polarity_scores(line)
         score = ss['compound']
         finalScore = finalScore + score
-        roundedFinalScore = round(finalScore/len(channel), 4)
-    print("Score", roundedFinalScoremy)
+    roundedFinalScore = round(finalScore/len(channel), 4)
+    print("Score", roundedFinalScore)
