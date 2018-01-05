@@ -1,9 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Tue Jan  2 22:05:31 2018
-
-@author: Administrator
-"""
 
 import gensim.summarization
 
