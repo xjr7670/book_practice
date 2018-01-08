@@ -1,3 +1,6 @@
+#-*- coding:utf-8 -*-
+
+import random
 from math import sqrt
 from PIL import Image, ImageDraw
 
@@ -16,6 +19,7 @@ def readfile(filename):
         # 剩余部分就是该行对应的数据
         data.append([float(x) for x in p[1:]])
     return rownames, colnames, data
+
 
 def pearson(v1, v2):
     # 简单求和
@@ -74,8 +78,8 @@ def hcluster(rows, distance=pearson):
         ]
 
         # 建立新的聚类
-        newcluster = bicluster(mergevec, left=clust[lowestpair[0]], 
-            right=clust[lowestpair[1]], 
+        newcluster = bicluster(mergevec, left=clust[lowestpair[0]],
+            right=clust[lowestpair[1]],
             distance=closest, id=currentclustid)
 
         # 不在原始集合中的聚类，其id为负数
@@ -166,9 +170,50 @@ def drawnode(draw, clust, x, y, scaling, labels):
         # 如果这是一个叶节点，则绘制节点的标签
         draw.text((x+5, y-7), labels[clust.id], (0, 0, 0))
 
+
 def rotatematrix(data):
     newdata = []
     for i in range(len(data[0])):
         newrow = [data[j][i] for j in range(len(data))]
         newdata.append(newrow)
     return newdata
+
+
+def kcluster(rows, distance=pearson, k=4):
+    # 确定每个点的最小值和最大值
+    ranges = [(min([row[i] for row in rows]), max([row[i] for row in rows])) for i in range(len(rows[0]))]
+
+    # 随机创建k个中心点
+    clusters = [[random.random() * (ranges[i][1] - ranges[i][0]) + ranges[i][0] for i in range(len(rows[0]))] for j in range(k)]
+
+    lastmatches = None
+    for t in range(100):
+        print("iteration %d" % t)
+        bestmatches = [[] for i in range(k)]
+
+        # 在每一行中寻找距离最近的中心点
+        for j in range(len(rows)):
+            row = rows[j]
+            bestmatch = 0
+            for i in range(k):
+                d = distance(clusters[i], row)
+                if d < distance(clusters[bestmatch], row):
+                    bestmatch = i
+            bestmatches[bestmatch].append(j)
+
+        # 如果结果与上一次相同，则整个过程结束
+        if bestmatches == lastmatches:
+            break
+        lastmatches = bestmatches
+
+    # 把中心点移到其所有成员的平均位置处
+    for i in range(k):
+        avgs = [0.0] * len(rows[0])
+        if len(bestmatches[i]) > 0:
+            for rowid in bestmatches[i]:
+                for m in range(len(rows[rowid])):
+                    avgs[m] += rows[rowid][m]
+            for j in range(len(avgs)):
+                avgs[j] /= len(bestmatches[i])
+            clusters[i] = avgs
+    return bestmatches
