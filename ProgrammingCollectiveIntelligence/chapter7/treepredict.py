@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 #-*- coding:utf-8 -*-
 
+from PIL import Image, ImageDraw
 
 my_data = [['slashdot', 'USA', 'yes', 18, 'None'],
           ['google', 'France', 'yes', 23, 'Premium'],
@@ -84,3 +85,104 @@ def entropy(rows):
         ent = ent - p * log2(p)
 
     return ent
+
+
+def buildtree(rows, scoref=entropy):
+    if len(rows) == 0:
+        return decisionnode()
+    current_score = scoref(rows)
+
+    # 定义一些变量以记录最佳拆分条件
+    best_gain = 0.0
+    best_criteria = None
+    best_sets = None
+
+    column_count = len(rows[0]) - 1
+    for col in range(0, column_count):
+        # 在当前列中生成一个由不同值构成的序列
+        column_values = {}
+        for row in rows:
+            column_values[row[col]] = 1
+        # 接下来根据这一列中的每个值，尝试对数据集进行拆分
+        for value in column_values.keys():
+            (set1, set2) = divideset(rows, col, value)
+
+            # 信息增益
+            p = float(len(set1)) / len(rows)
+            gain = current_score - p * scoref(set1) - (1 - p) * scoref(set2)
+            if gain > best_gain and len(set1) > 0 and len(set2) > 0:
+                best_gain = gain
+                best_criteria = (col, value)
+                best_sets = (set1, set2)
+
+    # 创建子分支
+    if best_gain > 0:
+        trueBranch = buildtree(best_sets[0])
+        falseBranch = buildtree(best_sets[1])
+        return decisionnode(col=best_criteria[0], value=best_criteria[1], 
+                tb=trueBranch, fb=falseBranch)
+    else:
+        return decisionnode(results=uniquecounts(rows))
+
+
+def printtree(tree, indent=''):
+    # 这是一个叶节点吗？
+    if tree.results != None:
+        print(str(tree.results))
+    else:
+        # 打印判断条件
+        print(str(tree.col) + ':' + str(tree.value) + '? ')
+
+        # 打印分支
+        print(indent + 'T->', end='')
+        printtree(tree.tb, indent + ' ')
+        print(indent + 'F->', end='')
+        printtree(tree.fb, indent + ' ')
+
+
+def getwidth(tree):
+    if tree.tb == None and tree.fb == None:
+        return 1
+    return getwidth(tree.tb) + getwidth(tree.fb)
+
+
+def getdepth(tree):
+    if tree.tb == None and tree.fb == None:
+        return 0
+    return max(getdepth(tree.tb), getdepth(tree.fb)) + 1
+
+
+def drawtree(tree, jpeg='tree.jpg'):
+    w = getwidth(tree) * 100
+    h = getwidth(tree) * 100 + 120
+
+    img = Image.new('RGB', (w, h), (255, 255, 255))
+    draw = ImageDraw.Draw(img)
+
+    drawnode(draw, tree, w/2, 20)
+    img.save(jpeg, 'JPEG')
+
+
+def drawnode(draw, tree, x, y):
+    if tree.results == None:
+        # 得到每个分支的宽度
+        w1 = getwidth(tree.fb) * 100
+        w2 = getwidth(tree.tb) * 100
+
+        # 确定此节点所要占据的总空间
+        left = x - (w1 + w2) / 2
+        right = x + (w1 + w2) / 2
+
+        # 绘制判断条件字符串
+        draw.text((x-20, y-10), str(tree.col) + ':' + str(tree.value), (0, 0, 0))
+
+        # 绘制到分支的连线
+        draw.line((x, y, left + w1/2, y + 100), fill=(255, 0, 0))
+        draw.line((x, y, right - w2/2, y + 100), fill=(255, 0, 0))
+
+        # 绘制到分支的节点
+        drawnode(draw, tree.fb, left + w1/2, y + 100)
+        drawnode(draw, tree.tb, right - w2/2, y + 100)
+    else:
+        txt = ' \n'.join(['%s:%d' % v for v in tree.results.items()])
+        draw.text((x - 20, y), txt, (0, 0, 0))
