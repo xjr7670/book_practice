@@ -3,21 +3,22 @@
 
 from PIL import Image, ImageDraw
 
-my_data = [['slashdot', 'USA', 'yes', 18, 'None'],
-          ['google', 'France', 'yes', 23, 'Premium'],
-          ['digg', 'USA', 'yes', 24, 'Basic'],
-          ['kiwitobes', 'France', 'yes', 23, 'Basic'],
-          ['google', 'UK', 'no', 21, 'Premium'],
-          ['(direct)', 'New Zealand', 'no', 12, 'None'],
-          ['(direct)', 'UK', 'no', 24, 'Basic'],
-          ['google', 'USA', 'no', 24, 'Premium'],
-          ['slashot','France', 'yes', 19, 'None'],
-          ['digg', 'USA', 'no', 18, 'None'],
-          ['google', 'UK', 'no', 18, 'None'],
-          ['kiwitobes', 'UK', 'no', 19, 'None'],
-          ['digg', 'New Zealand', 'yes', 12, 'Basic'],
-          ['google', 'UK', 'yes', '18', 'Basic'],
-          ['kiwitobes', 'France', 'yes', 19, 'Basic']]
+my_data=[['slashdot','USA','yes',18,'None'],
+        ['google','France','yes',23,'Premium'],
+        ['digg','USA','yes',24,'Basic'],
+        ['kiwitobes','France','yes',23,'Basic'],
+        ['google','UK','no',21,'Premium'],
+        ['(direct)','New Zealand','no',12,'None'],
+        ['(direct)','UK','no',21,'Basic'],
+        ['google','USA','no',24,'Premium'],
+        ['slashdot','France','yes',19,'None'],
+        ['digg','USA','no',18,'None'],
+        ['google','UK','no',18,'None'],
+        ['kiwitobes','UK','no',19,'None'],
+        ['digg','New Zealand','yes',12,'Basic'],
+        ['slashdot','UK','no',21,'None'],
+        ['google','UK','yes',18,'Basic'],
+        ['kiwitobes','France','yes',19,'Basic']]
 
 class decisionnode:
     
@@ -28,19 +29,28 @@ class decisionnode:
         self.tb = tb
         self.fb = fb
 
+# Python3中使用书里面的divideset函数会报错
+# 因为row[column]有可能是字符串而value是数字，或者反过来
+# 在python2里面是可以比较的，但是在python3不行
+# 所以要单独定义
+def split_function1(row, column, value):
+    column_value = row[column]
+    if isinstance(value, int) or isinstance(value, float):
+        if isinstance(column_value, str):
+            return False
+        elif type(value) == type(column_value):
+            return row[column] >= value
+    elif isinstance(value, str):
+        return column_value == value
 
 # 在某一列上对数据集合进行拆分，能够处理数值型数据或名词性数据
 def divideset(rows, column, value):
-    # 定义一个函数，令其告诉我们数据行属于第一组（返回值为true）还是第二组（返回值为false）
-    split_function = None
-    if isinstance(value, int) or isinstance(value, float):
-        split_function = lambda row: row[column] >= value
-    else:
-        split_function = lambda row: row[column] == value
+    # 定义一个函数，令其告诉我们数据行属于第一组（返回值为true）
+    # 还是第二组（返回值为false）
 
     # 将数据集拆分成两个集合，并返回
-    set1 = [row for row in rows if split_function(row)]
-    set2 = [row for row in rows if not split_function(row)]
+    set1 = [row for row in rows if split_function1(row, column, value)]
+    set2 = [row for row in rows if not split_function1(row, column, value)]
     return (set1, set2)
 
 
@@ -134,9 +144,9 @@ def printtree(tree, indent=''):
         print(str(tree.col) + ':' + str(tree.value) + '? ')
 
         # 打印分支
-        print(indent + 'T->', end='')
+        print(indent + 'T-> ', end='')
         printtree(tree.tb, indent + ' ')
-        print(indent + 'F->', end='')
+        print(indent + 'F-> ', end='')
         printtree(tree.fb, indent + ' ')
 
 
@@ -186,3 +196,23 @@ def drawnode(draw, tree, x, y):
     else:
         txt = ' \n'.join(['%s:%d' % v for v in tree.results.items()])
         draw.text((x - 20, y), txt, (0, 0, 0))
+
+
+def classify(observation, tree):
+    if tree.results != None:
+        return tree.results
+    else:
+        v = observation[tree.col]
+        branch = None
+        if isinstance(v, int) or isinstance(v, float):
+            if v >= tree.value:
+                branch = tree.tb
+            else:
+                branch = tree.fb
+        else:
+            if v == tree.value:
+                branch = tree.tb
+            else:
+                branch = tree.fb
+    
+    return classify(observation, branch)
