@@ -216,3 +216,72 @@ def classify(observation, tree):
                 branch = tree.fb
     
     return classify(observation, branch)
+
+
+def prune(tree, mingain):
+    # 如果分支不是叶节点，则对其进行剪枝操作
+    if tree.tb.results == None:
+        prune(tree.tb, mingain)
+    if tree.fb.results == None:
+        prune(tree.fb, mingain)
+
+    # 如果两个子分支都是叶节点，则判断它们是否需要合并
+    if tree.tb.results != None and tree.fb.results != None:
+        # 构造合并后的数据集
+        tb, fb = [], []
+        for v, c in tree.tb.results.items():
+            tb += [[v]] * c
+        for v, c in tree.fb.results.items():
+            fb += [[v]] * c
+        
+        # 检查熵的减少情况
+        delta = entropy(tb + fb) - (entropy(tb) + entropy(fb) / 2)
+        if delta < mingain:
+            # 合并分支
+            tree.tb, tree.fb = None, None
+            tree.results = uniquecounts(tb + fb)
+
+
+def mdclassify(observation, tree):
+    if tree.results != None:
+        return tree.results
+    else:
+        v = observation[tree.col]
+        if v == None:
+            tr, fr = mdclassify(observation, tree.tb), mdclassify(observation, tree.fb)
+            tcount = sum(tr.values())
+            fcount = sum(fr.values())
+            tw = float(tcount) / (tcount + fcount)
+            fw = float(tcount) / (tcount + fcount)
+            result = {}
+            for k, v in tr.items():
+                result[k] = v * tw
+            for k, v in fr.items():
+                if k not in result:
+                    result[k] = 0
+                result[k] += v * fw
+            return result
+        else:
+            if isinstance(v, int) or isinstance(v, float):
+                if v >= tree.value:
+                    branch = tree.tb
+                else:
+                    branch = tree.fb
+            else:
+                if v == tree.value:
+                    branch = tree.tb
+                else:
+                    branch = tree.fb
+            return mdclassify(observation, branch)
+
+
+def variance(rows):
+    if len(rows) == 0:
+        return 0
+    data = [float(row[len(row) - 1]) for row in rows]
+    mean = sum(data) / len(data)
+    variance = sum([(d - mean) ** 2 for d in data]) / len(data)
+    return variance
+
+
+
