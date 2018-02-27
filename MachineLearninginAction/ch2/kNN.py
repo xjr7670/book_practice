@@ -47,3 +47,36 @@ def classify0(inX, dataSet, labels, k):
 
     # 返回出现次数最多的，类别
     return sortedClassCount[0][0]
+
+
+def file2matrix(filename):
+    fr = open(filename)
+    arrayOLines = fr.readlines()
+    fr.close()
+    numberOfLines = len(arrayOLines)
+    returnMat = np.zeros((numberOfLines, 3))
+    classLabelVector = []
+    index = 0
+    for line in arrayOLines:
+        line = line.strip()
+        listFromLine = line.split('\t')
+        returnMat[index, :] = listFromLine[0:3]
+        classLabelVector.append(int(listFromLine[-1]))
+        index += 1
+    return returnMat, classLabelVector
+
+
+def makeScatter(datingDataMat, datingLabels):
+    import matplotlib as mpl
+    import matplotlib.pyplot as plt
+    import matplotlib.font_manager as fmn
+
+    myfont = fmn.FontProperties(fname='/usr/share/fonts/adobe-source-han-sans-cn/SourceHanSansCN-Regular.otf')
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    ax.scatter(datingDataMat[:, 0], datingDataMat[:, 1], 15.0 * np.array(datingLabels), 15.0 * np.array(datingLabels))
+    ax.set_xlabel('每年获取的飞行常客里程数', fontproperties=myfont)
+    ax.set_xlabel('玩视频游戏所耗时间百分比', fontproperties=myfont)
+    #ax.set_ylabel('每周消费的冰淇淋公升数', fontproperties=myfont)
+    ax.legend(True)
+    plt.show()
