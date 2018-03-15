@@ -21,16 +21,16 @@ def sigmoid(inX):
 
 
 def gradAscent(dataMatIn, classLabels):
-    dataMatrix = np.mat(dataMatIn)
-    labelMat = np.mat(classLabels).transpose()
+    dataMatrix = np.mat(dataMatIn)              # 把二维数组转换为矩阵
+    labelMat = np.mat(classLabels).transpose()  # 把一维数组转换为矩阵
     m, n = np.shape(dataMatrix)
-    alpha = 0.001
-    maxCycles = 500
-    weights = np.ones((n, 1))
+    alpha = 0.001               # 设置步长
+    maxCycles = 500             # 循环次数
+    weights = np.ones((n, 1))   # 回归系数，全部初始化为1
     for k in range(maxCycles):
-        h = sigmoid(dataMatrix * weights)
-        error = (labelMat - h)
-        weights = weights + alpha * dataMatrix.transpose() * error
+        h = sigmoid(dataMatrix * weights)   # 矩阵相乘
+        error = (labelMat - h)              # 矩阵相减
+        weights = weights + alpha * dataMatrix.transpose() * error  # 得到计算后的回归系数
     return weights
 
 
@@ -54,8 +54,8 @@ def plotBestFit(weights):
     ax = fig.add_subplot(111)
     ax.scatter(xcord1, ycord1, s=30, c='red', marker='s')
     ax.scatter(xcord2, ycord2, s=30, c='green')
-    x = np.arange(-3.0, 3.0, 0.1)
-    y = (-weights[0] - weights[1] * x) / weights[2]
+    x = np.arange(-3.0, 3.0, 0.1)                       # 得到x与y的值，或者两者的关系之后 
+    y = (-weights[0] - weights[1] * x) / weights[2]     # 就可以画出一条直线来（把数据一分为二）
     ax.plot(x, y)
     plt.xlabel('X1')
     plt.ylabel('X2')
