@@ -127,3 +127,36 @@ def hillclimb(domain, costf):
             break
 
     return sol
+
+# 模拟退火算法
+def annealingoptimize(domain, costf, T=10000.0, cool=0.95, step=1):
+    # 随机初始化值
+    vec = [random.randint(domain[i][0], domain[i][1])
+            for i in range(len(domain))]
+
+    while T > 0.1:
+        # 选择一个索引值
+        i = random.randint(0, len(domain)-1)
+
+        # 选择一个改变索引值的方向
+        direct = random.randint(-step, step)
+
+        # 创建一个代表题解的新列表，改变其中一个值
+        vecb = vec[:]
+        vecb[i] += direct               # 每次改变一个单位
+        if vecb[i] < domain[i][0]:      #
+            vecb[i] = domain[i][0]      # 保存最小值
+        elif vecb[i] > domain[i][1]:    #
+            vecb[i] = domain[i][1]      #
+
+        # 计算当前成本和新的成本
+        ea = costf(vec)
+        eb = costf(vecb)
+
+        # 它是更好的解吗？或者是趋向最优解的可能的临界解吗？
+        if (eb < ea or random.random() < pow(math.e, -(eb-ea)/T)):
+            vec = vecb
+
+        # 降低温度
+        T = T * cool
+    return vec
