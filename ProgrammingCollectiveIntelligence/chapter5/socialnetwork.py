@@ -1,6 +1,7 @@
 #-*- coding:utf-8 -*-
 
 import math
+from PIL import Image, ImageDraw
 
 people = ['Charlie', 'Augustus', 'Veruca', 'Violet', 'Mike', 'Joe', 'Willy', 'Miranda']
 links = [
@@ -44,6 +45,38 @@ def crosscount(v):
             # 如果两条线的分数值介于0和1之间，则两线彼此交叉
             if ua > 0 and ua < 1 and ub > 0 and ub < 1:
                 total += 1
+
+    # 对太近的结节进行惩罚
+    for i in range(len(people)):
+        for j in range(i+1, len(people)):
+            # 获得两结点的位置
+            (x1, y1), (x2, y2) = loc[people[i]], loc[people[j]]
+
+            # 计算两结点的间隔
+            dist = math.sqrt(math.pow(x1-x2, 2) + math.pow(y1-y2, 2))
+            # 对间距小于50像素的结点进行判罚
+            if dist < 50:
+                total += (1.0 - (dist/50.0))
     return total
 
 domain = [(10, 370)] * (len(people)*2)
+
+
+# 绘制网络
+def drawnetwork(sol):
+    # 建立image对象
+    img = Image.new('RGB', (400, 400), (255, 255, 255))
+    draw = ImageDraw.ImageDraw(img)
+
+    # 建立标示位置信息的字典
+    pos = dict([(people[i], (sol[i*2], sol[i*2+1])) for i in range(0, len(people))])
+
+    # 绘制连线
+    for (a, b) in links:
+        draw.line((pos[a], pos[b]), fill=(255, 0, 0))
+
+    # 绘制代表人的结点
+    for n, p in pos.items():
+        draw.text(p, n, (0, 0, 0))
+
+    img.save('result.png')
