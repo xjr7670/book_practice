@@ -1,6 +1,8 @@
 #-*- coding: utf-8 -*-
 
 import math
+import numpy as np
+import matplotlib.pyplot as plt
 from random import random, randint
 
 def wineprice(rating, age):
@@ -117,3 +119,102 @@ def crossvalidate(algf, data, trials = 100, test = 0.05):
         trainset, testset = dividedata(data, test)
         error += testalgorithm(algf, trainset, testset)
     return error / trials
+
+
+## 加入不同类型的变量
+
+# 加入数据集
+def wineset2():
+    rows = []
+    for i in range(300):
+        rating = random() * 50 + 50
+        age = random() * 50
+        aisle = float(randint(1, 20))
+        bottlesize = [375.0, 750.0, 1500.0, 3000.0][randint(0, 3)]
+        price = wineprice(rating, age)
+        price *= (bottlesize / 750)
+        rows.append({'input': (rating, age, aisle, bottlesize), 'result': price})
+    return rows
+
+# 按比例缩放
+def rescale(data, scale):
+    # scale是缩放比例，它是一个数组，长度跟特征的长度一样。一一对应
+    scaleddata = []
+    for row in data:
+        scaled = [scale[i] * row['input'][i] for i in range(len(scale))]
+        scaleddata.append({'input': scaled, 'result': row['result']})
+    return scaleddata
+
+# 成本函数
+def createcostfunction(algf, data):
+    def costf(scale):
+        sdata = rescale(data, scale)
+        return crossvalidate(algf, sdata, trials=10)
+    return costf
+
+# 设定权重范围
+weightdomain = [(0, 20)] * 4
+
+
+# 不对称分布
+def wineset3():
+    rows = wineset1()
+    for row in rows:
+        if random() < 0.5:
+            # 葡萄酒是从折扣店购得的
+            row['result'] *= 0.5
+    return rows
+
+# 估计概率密度
+def probguess(data, vec1, low, high, k=5, weightf=gaussian):
+    dlist = getdistances(data, vec1)
+    nweight = 0.0
+    tweight = 0.0
+
+    for i in range(k):
+        dist = dlist[i][0]
+        idx = dlist[i][1]
+        weight = weightf(dist)
+        v = data[idx]['result']
+
+        # 当前数据点位于指定范围内吗？
+        if v >= low and v <= high:
+            nweight += weight
+        tweight += weight
+    if tweight == 0:
+        return 0
+
+    # 概率等于位于指定范围内的权重值除以所有权重值
+    return nweight / tweight
+
+
+## 绘制概率分布
+
+# 构造累积概率图数据
+def cumulativegraph(data, vec1, high, k=5, weightf=gaussian):
+    t1 = np.arange(0.0, high, 0.1)
+    cprob = np.array([probguess(data, vec1, 0, v, k, weightf) for v in t1])
+    plt.plot(t1, cprob)
+    plt.show()
+
+# 加权概率
+def probabilitygraph(data, vec1, high, k=5, weightf=gaussian, ss=5.0):
+    # 建立一个代表价格的值域范围
+    t1 = np.arange(0.0, high, 0.1)
+
+    # 得到整个值域范围内的所有概率
+    probs = [probguess(data, vec1, v, v+0.1, k, weightf) for v in t1]
+
+    # 通过加上近邻概率的高斯计算结果，对概率值做平滑处理
+    smoothed = []
+    for i in range(len(probs)):
+        sv = 0.0
+        for j in range(0, len(probs)):
+            dist = abs(i-j) * 0.1
+            weight = gaussian(dist, sigma=ss)
+            sv += weight * probs[j]
+        smoothed.append(sv)
+    smoothed = np.array(smoothed)
+
+    plt.plot(t1, smoothed)
+    plt.show()
