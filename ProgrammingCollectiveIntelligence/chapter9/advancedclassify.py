@@ -97,3 +97,42 @@ def matchcount(interest1, interest2):
 # 计算距离
 def miledistance(a1, a2):
     return 0
+
+# 构造新的数据集
+def loadnumerical():
+    oldrows = loadmatch('matchmaker.csv')
+    newrows = []
+    for row in oldrows:
+        d = row.data
+        data = [float(d[0]), yesno(d[1]), yesno(d[2]),
+                float(d[5]), yesno(d[6]), yesno(d[7]),
+                matchcount(d[3], d[8]),
+                milesdistance(d[4], d[9]),
+                row.match]
+        newrows.append(matchrow(data))
+    return newrows
+
+# 数据缩放
+def scaledata(rows):
+    low = [999999999.0] * len(rows[0].data)
+    high = [-999999999.0] * len(rows[0].data)
+    # 寻找最大值和最小值
+    for row in rows:
+        d = row.data
+        for i in range(len(d)):
+            if d[i] < low[i]:
+                low[i] = d[i]
+            if d[i] > high[i]:
+                high[i] = d[i]
+
+    # 对数据进行缩放处理的函数
+    def scaleinput(d):
+        return [(d.data[i] - low[i]) / (high[i] - low[i])
+                   for i in range(len(row))]
+
+    # 对所有数据进行缩放处理
+    newrows = [matchrow(scaleinput(row.data)+[row.match])
+                   for row in rows]
+
+    # 返回新的数据和缩放处理函数
+    return newrows, scaleinput
