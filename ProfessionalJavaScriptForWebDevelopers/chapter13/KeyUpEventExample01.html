@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>键盘事件</title>
+    <meta charset="utf-8">
+    <style type="text/css">
+        
+        .main {
+            border: 1px solid black;
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <input type="text" name="myText" id="myText">
+    <script type="text/javascript">
+        var btn = document.getElementById('myText');
+        btn.addEventListener('textInput', function(event){
+            console.log(event.data);
+        }, false);
+    </script>
+</body>
+</html>

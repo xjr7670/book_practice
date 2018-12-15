@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>XHRAsyncExample</title>
+</head>
+<body>
+    <script type="text/javascript">
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4) {
+                if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
+                    alert(xhr.responseText);
+                } else {
+                    alert("unsuccessful" + xhr.status);
+                }
+            }
+        }
+        xhr.open("get", "example.txt", false);
+        xhr.send(null);
+    </script>
+</body>
+</html>

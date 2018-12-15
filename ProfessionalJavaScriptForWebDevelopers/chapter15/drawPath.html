@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Draw Path</title>
+</head>
+<body>
+    <canvas id="drawing" width="200" height="300">
+        
+    </canvas>
+    <script type="text/javascript">
+        var drawing = document.getElementById('drawing');
+
+        if (drawing.getContext) {
+            var ctx = drawing.getContext("2d");
+
+            // 开始路径
+            ctx.beginPath();
+
+            // 绘制外圆
+            ctx.arc(100, 100, 99, 0, Math.PI * 2, false);
+            // ctx.fillStyle = "rgba(50, 0, 255, 0.5)";
+            // ctx.fill();
+
+            // 绘制内圆
+            ctx.moveTo(194, 100);
+            ctx.arc(100, 100, 94, 0, 2 * Math.PI, false);
+
+            // 绘制分针
+            ctx.moveTo(100, 100);
+            ctx.lineTo(100, 30);
+
+            // 绘制时针
+            ctx.moveTo(100, 100);
+            ctx.lineTo(40, 100);
+
+            // 描边路径
+            // ctx.strokeStyle = "black";
+            ctx.stroke();
+
+            // 加数字12
+            ctx.font = "bold 14px Arial";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillText("12", 100, 20);
+            ctx.fillText("6", 100, 180);
+            ctx.fillText("3", 180, 100);
+            ctx.fillText("9", 20, 100);
+            ctx.fillText("1", 135, 35);
+            ctx.fillText("2", 163, 63);
+            ctx.fillText("4", 163, 137);
+            ctx.fillText("5", 135, 165);
+            ctx.fillText("7", 65, 165);
+            ctx.fillText("8", 37, 137);
+            ctx.fillText("10", 37, 63);
+            ctx.fillText("11", 65, 35);
+        }
+    </script>
+</body>
+</html>

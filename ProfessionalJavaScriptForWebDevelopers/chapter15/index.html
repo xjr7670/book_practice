@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Canvas</title>
+</head>
+<body>
+    <canvas id="drawing" width="200" height="300">
+        A drawing of something.
+    </canvas>
+    <script type="text/javascript">
+        var drawing = document.getElementById('drawing');
+
+        // 确定浏览器支持canvas元素
+        if (drawing.getContext) {
+            var context = drawing.getContext("2d");
+
+            // 设置默认颜色
+            context.fillStyle = "#ff0000";
+            // 画图
+            context.fillRect(10, 10, 50, 50);
+            // 画蓝色半透明矩形
+            context.fillStyle = "rgba(0, 0, 250, 0.5)";
+            context.fillRect(35, 35, 50, 50);
+
+            // 清除部分区域
+            context.clearRect(40, 40, 10, 10)
+
+            // 颜色描边
+            context.strokeStyle = "#ff0000";
+            context.strokeRect(60, 60, 50, 50);
+            // 边框宽度
+            context.lineWidth = 2;
+            // 边框末端形状
+            context.lineCap = "square";
+            // 相交方式
+            context.lineJoin = "round";
+
+            context.strokeStyle = "rgba(0, 0, 250, 0.5)";
+            context.strokeRect(85, 85, 50, 50);
+
+            // 取得图像的数据URI
+            var imgURI = drawing.toDataURL('image/png');
+
+            // 显示图像
+            var image = document.createElement("img");
+            image.src = imgURI;
+            document.body.appendChild(image);
+        }
+    </script>
+</body>
+</html>

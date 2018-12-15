@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>绘制阴影</title>
+</head>
+<body>
+    <canvas id="drawing"></canvas>
+    <script type="text/javascript">
+        window.addEventListener("load", function() {
+            var drawing = document.getElementById('drawing');
+            var contenxt = drawing.getContext("2d");
+
+            // 设置阴影
+            contenxt.shadowOffsetX = 5;
+            contenxt.shadowOffsetY = -5;
+            contenxt.shadowBlur = 4;
+            contenxt.shadowColor = "rgba(0, 0, 0, 0.5)";
+
+            // 绘制红色矩形 
+            contenxt.fillStyle = "#ff0000";
+            contenxt.fillRect(10, 10, 50, 50);
+
+            // 绘制蓝色矩形
+            contenxt.fillStyle = "rgba(0, 0, 255, 1)";
+            contenxt.fillRect(30, 30, 50, 50);
+        }, false);
+    </script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>模式</title>
+</head>
+<body>
+    <canvas id="drawing"></canvas>
+    <img src="smile.gif" id="smile">
+    <script type="text/javascript">
+        window.onload = function() {
+            var image = document.getElementById("smile");
+            var drawing = document.getElementById('drawing');
+            var context = drawing.getContext("2d");
+
+            var pattern = context.createPattern(image, "repeat");
+
+            // 绘制矩形
+            context.fillStyle = pattern;
+            context.fillRect(10, 10, 150, 150);
+        }
+    </script>
+</body>
+</html>

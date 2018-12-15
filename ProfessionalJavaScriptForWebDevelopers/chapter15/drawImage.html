@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>绘制图像</title>
+</head>
+<body>
+    <canvas id="drawing"></canvas>
+    <img src="smile.gif" id="smile">
+    <script type="text/javascript">
+        window.onload = function() {
+            var image = document.getElementById("smile");
+            var drawing = document.getElementById('drawing');
+            var context = drawing.getContext("2d");
+
+            context.drawImage(image, 10, 10);
+
+            // 改变大小
+            context.drawImage(image, 100, 100, 30, 30);
+
+            // 取部分区域
+            context.drawImage(image, 0, 10, 50, 100, 0, 100, 40, 60);
+        }
+    </script>
+</body>
+</html>

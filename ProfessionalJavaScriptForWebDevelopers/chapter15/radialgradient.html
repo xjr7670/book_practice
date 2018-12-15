@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>径向渐变</title>
+    <meta charset="utf-8">
+</head>
+<body>
+    <canvas id="drawing"></canvas>
+    <script type="text/javascript">
+        window.addEventListener("load", function() {
+            var drawing = document.getElementById('drawing');
+            var contenxt = drawing.getContext("2d");
+
+            var gradient = contenxt.createRadialGradient(45, 45, 10, 55, 55, 30)
+
+            gradient.addColorStop(0, "white");
+            gradient.addColorStop(1, "black");
+
+            // 绘制红色矩形
+            contenxt.fillStyle = "#ff0000";
+            contenxt.fillRect(10, 10, 50, 50);
+
+            // 绘制渐变矩形
+            contenxt.fillStyle = gradient;
+            contenxt.fillRect(30, 30, 50, 50);
+        }, false);
+    </script>
+</body>
+</html>

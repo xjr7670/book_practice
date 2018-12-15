@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>一个函数处理多个事件</title>
+    <style type="text/css">
+        
+        .main {
+            border: 1px solid black;
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div class="main" id="myBtn">
+        
+    </div>
+    <script type="text/javascript">
+        var btn = document.getElementById('myBtn');
+        var handler = function(event) {
+            switch (event.type) {
+                case "click":
+                    alert("Clicked");
+                    break;
+                case "mouseover":
+                    event.target.style.backgroundColor = "red";
+                    break;
+                case "mouseout":
+                    event.target.style.backgroundColor = "";
+                    break;
+            }
+        };
+
+        btn.onclick = handler;
+        btn.onmouseover = handler;
+        btn.onmouseout = handler;
+    </script>
+</body>
+</html>

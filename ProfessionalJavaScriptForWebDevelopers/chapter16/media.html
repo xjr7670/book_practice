@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>媒体元素</title>
+    <meta charset="utf-8">
+</head>
+<body>
+    <div class="video">
+        <video src="billyBrowsers.ogg" poster="mymovie.png" width="300" height="200" id="player" controls="controls">Not Support</video>
+    </div>
+    <div class="controls">
+        <input type="button" value="Play" name="" id="video-btn">
+        <span id="curtime">0</span>/<span id="duration">0</span>
+    </div>
+
+    <script type="text/javascript">
+        var player = document.getElementById("player"),
+            btn = document.getElementById("video-btn"),
+            curtime = document.getElementById("curtime"),
+            duration = document.getElementById("duration");
+
+        // 更新播放时间
+        //duration.innerText = player.duration;
+
+        // 为按钮添加事件处理程序
+
+        // 显示总时间
+        player.addEventListener("canplaythrough", function(event) {
+            duration.innerText = Math.round(player.duration);
+        }, false);
+
+        // 播放和暂停
+        btn.addEventListener("click", function(event) {
+            if (player.paused) {
+                player.play();
+                btn.value = "Pause";
+            } else {
+                player.pause();
+                btn.value = "Play";
+            }
+        }, false);
+
+        // 定时更新当前时间
+        setInterval(function() {
+            curtime.innerHTML = Math.round(player.currentTime, 1);
+        }, 250);
+    </script>
+</body>
+</html>

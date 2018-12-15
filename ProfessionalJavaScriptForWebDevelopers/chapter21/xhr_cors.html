@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>xhr cors</title>
+</head>
+<body>
+    <script type="text/javascript">
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4) {
+                console.log(xhr.responseText);
+            }
+        }
+        xhr.open("get", "http://localhost/test/altevents.php", true);
+        xhr.setRequestHeader("Origin", "http://localhost/");
+        xhr.send();
+    </script>
+</body>
+</html>

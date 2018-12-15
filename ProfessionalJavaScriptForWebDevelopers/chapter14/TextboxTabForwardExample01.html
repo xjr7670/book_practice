@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>textbox tab</title>
+</head>
+<body>
+    <input type="text" name="tel1", id="texttel1" maxlength="3">
+    <input type="text" name="tel2", id="texttel2" maxlength="3">
+    <input type="text" name="tel3", id="texttel3" maxlength="4">
+    <label>Email test:</label>
+    <input type="email" name="email">
+    <label>URL test</label>
+    <input type="url" name="url">
+    <input type="number" name="ccc" min="0" max="100" step="4">
+    <script type="text/javascript">
+        (function() {
+            function tabForward(event) {
+                var target = event.target;
+
+                if (target.value.length == target.maxLength) {
+                    var form = target.form;
+
+                    for (var i =0, len=form.elements.length; i< len; i++) {
+                        if (form.elements[i] == target) {
+                            if (form.elements[i+1]) {
+                                form.elements[i+1].focus();
+                            }
+                            return;
+                        }
+                    }
+                }
+            }
+        })();
+    </script>
+</body>
+</html>

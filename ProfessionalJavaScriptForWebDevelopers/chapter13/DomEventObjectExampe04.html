@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>停止事件传播</title>
+    <style type="text/css">
+        
+        .main {
+            border: 1px solid black;
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div class="main" id="myBtn">
+        
+    </div>
+    <script type="text/javascript">
+        var btn = document.getElementById('myBtn');
+        btn.onclick = function(event) {
+            alert("clicked");
+            event.stopPropagation();
+        }
+        document.body.onclick = function(event) {
+            alert("Body clicked");
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>事件流阶段判断</title>
+    <style type="text/css">
+        
+        .main {
+            border: 1px solid black;
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div class="main" id="myBtn">
+        
+    </div>
+    <script type="text/javascript">
+        var btn = document.getElementById('myBtn');
+        btn.onclick = function(event) {
+            alert(event.eventPhase);
+        };
+
+        document.body.addEventListener("click", function(event) {
+            alert(event.eventPhase);
+        }, true);
+
+        document.body.onclick = function(event) {
+            alert(event.eventPhase);
+        }
+
+
+    </script>
+</body>
+</html>

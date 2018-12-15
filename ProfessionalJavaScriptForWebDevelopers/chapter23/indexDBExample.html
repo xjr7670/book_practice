@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>IndexDB</title>
+</head>
+<body>
+    <script type="text/javascript">
+        var request, database;
+        request = indexedDB.open("admin");
+        request.onerror = function(event) {
+            alert("something bad happedn" + event.target.errorCode);
+        };
+        request.onsuccess = function(event) {
+            database = event.target.result;
+            console.log("success");
+            initialization()
+        };
+
+        function initialization() {
+            if (database.version != "1.0") {
+                request = database.setVersion("1.0");
+                request.onerror = function(event) {
+                    alert("something bad");
+                };
+                request.onsuccess = function(event) {
+                    console.log("db initialization complete. database name: " + database.name + "database version: " + database.version);
+                };
+            } else {
+                alert("already initialized.");
+            }
+        }
+    </script>
+</body>
+</html>

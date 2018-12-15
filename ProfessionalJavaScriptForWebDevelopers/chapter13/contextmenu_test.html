@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ContextMenu Event Example</title>
+    <style type="text/css">
+        #myDiv {
+            width: 500px;
+            height: 200px;
+        }
+
+        #ah {
+            position: absolute;
+            display: block;
+            visibility: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div id="myDiv">
+        Right click or Ctrl+click me to get a custom context menu. Click anywhere else to get the default context menu.
+    </div>
+    <span id="ah">啊</span>
+    <script type="text/javascript">
+        window.addEventListener("load", function(event) {
+            var div = document.getElementById("myDiv");
+
+            div.addEventListener("contextmenu", function(event) {
+                event.preventDefault();
+
+
+            }, false);
+
+        }, false);
+    </script>
+</body>
+</html>

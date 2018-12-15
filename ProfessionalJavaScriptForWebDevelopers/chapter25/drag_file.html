@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Drag File</title>
+</head>
+<body>
+        <div id="droptarget" style="width: 500px; height: 200px; background: silver">
+        Drop some files here
+    </div>
+    <script type="text/javascript">
+        var droptarget = document.getElementById('droptarget');
+
+        function handleEvent(event) {
+            var info = "",
+                output = document.getElementById("output"),
+                file,
+                i,
+                len;
+
+            event.preventDefault();
+
+            if (event.type == "drop") {
+                files = event.dataTransfer.files;
+                i = 0;
+                len = files.length;
+
+                while (i < len) {
+                    info += files[i].name + " (" + files[i].type + ", " + files[i].size + " bytes)<br >";
+                    i++;
+                }
+                output.innerHTML = info;
+            }
+        }
+
+        droptarget.addEventListener("dragenter", handleEvent, true);
+        droptarget.addEventListener("dragover", handleEvent, true);
+        droptarget.addEventListener("drop", handleEvent, true);
+    </script>
+    <div id="output"></div>
+</body>
+</html>
