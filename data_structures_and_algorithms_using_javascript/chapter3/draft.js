@@ -92,9 +92,12 @@ function prev() {
 }
 
 function next() {
-    if (this.pos < this.listSize - 1) {
-        ++this.pos;
-    }
+    // if (this.pos < this.listSize - 1) {
+    //     ++this.pos;
+    // }
+
+    // 在本章中，列表应该是可以无限next下去的，否则后面的for循环会进入死循环
+    ++this.pos;
 }
 
 function currPos() {
@@ -109,18 +112,74 @@ function getElement() {
     return this.dataStore[this.pos];
 }
 
-var names = new List();
-names.append("Cynthia");
-names.append("Raymond");
-names.append("Clayton");
-names.append("Jennifer");
-names.append("Bryan");
-names.append("Danny");
-names.front();
-console.log(names.getElement());
-names.next()
-console.log(names.getElement());
-names.next();
-names.next();
-names.prev();
-console.log(names.getElement());
+// var names = new List();
+// names.append("Cynthia");
+// names.append("Raymond");
+// names.append("Clayton");
+// names.append("Jennifer");
+// names.append("Bryan");
+// names.append("Danny");
+// names.front();
+// console.log(names.getElement());
+// names.next()
+// console.log(names.getElement());
+// names.next();
+// names.next();
+// names.prev();
+// console.log(names.getElement());
+
+/*********************** 3.4 一个基于列表的应用 ***************************/
+const fs = require("fs");
+const readline = require("readline");
+
+
+// 获取命令行输入的方法
+
+
+function createArr(file) {
+    var arr = fs.readFileSync(file).toString().split("\n");
+    for (let i = 0; i < arr.length; ++i) {
+        arr[i] = arr[i].trim();
+    }
+    return arr;
+}
+
+function displayList(list) {
+    for (list.front(); list.currPos() < list.length(); list.next()) {
+        if (list.getElement() instanceof Customer) {
+            console.log(list.getElement()["name"] + ", " + list.getElement()["movie"]);
+        } else {
+            console.log(list.getElement());
+        }
+    }
+}
+
+function Customer(name, movie) {
+    this.name = name;
+    this.movie = movie;
+}
+
+function checkOut(name, movie, filmList, customerList) {
+    if (movieList.contains(movie)) {
+        var c = new Customer(name, movie);
+        customerList.append(c);
+        filmList.remove(movie);
+    } else {
+        console.log(movie + " is not available.");
+    }
+}
+
+var movies = createArr("films.txt");
+var movieList = new List();
+var customers = new List();
+console.log(movies);
+for (let i = 0; i < movies.length; ++i) {
+    movieList.append(movies[i]);
+}
+console.log("Available movies: \n");
+displayList(movieList);
+checkOut("Jane Doe", "The Godfather", movieList, customers);
+console.log("\nCustomer Rentals: \n");
+displayList(customers);
+console.log("Movies Now Available\n");
+displayList(movieList);
