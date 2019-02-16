@@ -22,8 +22,9 @@ function remove(key) {
 }
 
 function showAll() {
-    for (let key in this.dataStore) {
-        console.log(key + ' -> ' + this.dataStore[key]);
+    var sortedKey = Object.keys(this.dataStore).sort();
+    for (let key in sortedKey) {
+        console.log(sortedKey[key] + ' -> ' + this.dataStore[sortedKey[key]]);
     }
 }
 
@@ -38,6 +39,7 @@ function count() {
 
 // 清空字典
 function clear() {
+
     for (let key in this.dataStore) {
         delete this.dataStore[key];
     }
