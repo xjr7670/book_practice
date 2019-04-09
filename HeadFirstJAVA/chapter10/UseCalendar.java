@@ -19,10 +19,9 @@ public class UseCalendar {
         System.out.println("set to 1 " + c.getTime());
 
         // 打印24小时制小时数
+        c.set(2019, 3, 9, 11, 28);
         System.out.println(c.get(Calendar.HOUR_OF_DAY));
         // 打印分钟
-        System.out.println(c.get(Calendar.DAY_OF_YEAR));
-        System.out.println(c.get(Calendar.MONTH));
-        System.out.println(c.get(Calendar.YEAR));
+        System.out.println(c.get(5));
     }
 }
