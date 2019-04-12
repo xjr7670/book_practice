@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class Dec2Bin {
     public static void main(String[] args) {
         ArrayList<Integer> binList = new ArrayList<Integer>();
-        long number = 18719460345L;
+        long number = 111111111111L;
         GetBin(number, binList);
         for (int i = binList.size()-1; i >= 0; i--) {
             System.out.print(binList.get(i));

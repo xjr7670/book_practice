@@ -7,7 +7,7 @@
 class Dec2Bin(object):
 
     def __init__(self):
-        self.number = 18719460345
+        self.number = 111111111111L
         self.result_list = []
     
     def get_rest(self, num):
