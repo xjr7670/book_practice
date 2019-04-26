@@ -5,7 +5,7 @@ public class Jukebox3 {
     ArrayList<Song> songList = new ArrayList<Song>();
 
     public static void main(String[] args) {
-        Jukebox1 jb = new Jukebox1();
+        Jukebox3 jb = new Jukebox3();
         jb.go();
     }
 
