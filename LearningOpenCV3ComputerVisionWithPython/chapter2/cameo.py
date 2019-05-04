@@ -50,6 +50,7 @@ class Cameo(object):
                 self._captureManager.stopWritingVideo()
         elif keycode == 27: # escape
             self._windowManager.destroyWindow()
+            self._captureManager.releaseCamera()
 
 
 if __name__ == '__main__':

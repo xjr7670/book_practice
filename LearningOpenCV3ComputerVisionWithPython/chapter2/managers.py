@@ -144,6 +144,11 @@ class CaptureManager(object):
                                                 size)
         
         self._videoWriter.write(self._frame)
+    
+    def releaseCamera(self):
+        """Release the camera device after all."""
+        
+        self._capture.release()
 
 
 class WindowManager(object):
