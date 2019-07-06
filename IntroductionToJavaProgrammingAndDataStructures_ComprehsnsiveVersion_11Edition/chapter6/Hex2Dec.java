@@ -18,6 +18,8 @@ public class Hex2Dec {
             char hexChar = hex.charAt(i);
             decimalValue = decimalValue * 16 + hexCharToDecimal(hexChar);
         }
+
+        return decimalValue;
     }
 
     public static int hexCharToDecimal(char ch) {
