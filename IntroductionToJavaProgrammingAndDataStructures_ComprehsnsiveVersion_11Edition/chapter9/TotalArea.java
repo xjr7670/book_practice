@@ -25,5 +25,21 @@ public class TotalArea {
         for (int i = 0; i < circleArray.length; i++) {
             System.out.printf("%-30f%-15f\n", circleArray[i].getRadius(), circleArray[i].getArea());
         }
+
+        System.out.println("____________________________________");
+
+        // Compute and display the result
+        System.out.printf("%-30s%-15s\n", "The total area of circle is ", sum(circleArray));
+    }
+
+    /** Add circle areas */
+    public static double sum(Circle9_8[] circleArray) {
+        double sum = 0;
+
+        for (int i = 0; i < circleArray.length; i++) {
+            sum += circleArray[i].getArea();
+        }
+
+        return sum;
     }
 }
