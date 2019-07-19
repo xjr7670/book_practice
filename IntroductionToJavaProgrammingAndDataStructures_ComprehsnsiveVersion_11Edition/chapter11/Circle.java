@@ -38,4 +38,10 @@ public class Circle extends GeometricObject {
         System.out.println("The circle is created " + getDateCreated() +
                            " and the radius is " + radius);
     }
+
+    // Override the toString method defined in the superclass
+    @Override
+    public String toString() {
+        return super.toString() + "\nrandius is " + radius;
+    }
 }
