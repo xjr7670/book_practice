@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Employee Info</title>
+</head>
+<body>
+  <div align="center">
+    <h1>增加员工联系信息</h1>
+    <hr>
+    <form method="post" action="/test_orm_old/add_employeeinfo_old/">
+      {% csrf_token %}
+      <input type="hidden" name="id" id="id" value="{{ info.id }}">
+      <div>
+        <label>电话号码：</label>
+        <input type="text" name="phone" id="phone">
+      </div>
+      <br>
+      <div>
+        <label>家庭住址：</label>
+        <input type="text" name="address" id="address">
+      </div>
+      <br>
+      <div><input type="submit" value="增加"></div>
+    </form>
+    <div style="color:red;">{{ error_info }}</div>
+  </div>
+</body>
+</html>
