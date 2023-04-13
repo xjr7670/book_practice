@@ -1,0 +1,196 @@
+ideo",
+      rinlinejQuery = / jQuery\d+="(?:null|\d+)"/g,
+      rnoshimcache = new RegExp("<(?:" + nodeNames + ")[\\s/>]", "i"),
+      rleadingWhitespace = /^\s+/,
+      rxhtmlTag = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/gi,
+      rtagName = /<([\w:]+)/,
+      rtbody = /<tbody/i,
+      rhtml = /<|&#?\w+;/,
+      rnoInnerhtml = /<(?:script|style|link)/i,
+      manipulation_rcheckableType = /^(?:checkbox|radio)$/i,
+      // checked="checked" or checked
+      rchecked = /checked\s*(?:[^=]|=\s*.checked.)/i,
+      rscriptType = /^$|\/(?:java|ecma)script/i,
+      rscriptTypeMasked = /^true\/(.*)/,
+      rcleanScript = /^\s*<!(?:\[CDATA\[|--)|(?:\]\]|--)>\s*$/g,
+
+      // We have to close these tags to support XHTML (#13200)
+      wrapMap = {
+        option: [1, "<select multiple='multiple'>", "</select>"],
+        legend: [1, "<fieldset>", "</fieldset>"],
+        area: [1, "<map>", "</map>"],
+        param: [1, "<object>", "</object>"],
+        thead: [1, "<table>", "</table>"],
+        tr: [2, "<table><tbody>", "</tbody></table>"],
+        col: [2, "<table><tbody></tbody><colgroup>", "</colgroup></table>"],
+        td: [3, "<table><tbody><tr>", "</tr></tbody></table>"],
+
+        // IE6-8 can't serialize link, script, style, or any html5 (NoScope) tags,
+        // unless wrapped in a div with non-breaking characters in front of it.
+        _default: jQuery.support.htmlSerialize ? [0, "", ""] : [1, "X<div>",
+          "</div>"]
+      },
+      safeFragment = createSafeFragment(document),
+      fragmentDiv = safeFragment.appendChild(document.createElement("div"));
+
+  wrapMap.optgroup = wrapMap.option;
+  wrapMap.tbody = wrapMap.tfoot = wrapMap.colgroup = wrapMap.caption = wrapMap.thead;
+  wrapMap.th = wrapMap.td;
+
+  jQuery.fn.extend({
+    text: function (value) {
+      return jQuery.access(this, function (value) {
+        return value === undefined ? jQuery.text(this) : this.empty().append(
+            ( this[0] && this[0].ownerDocument || document ).createTextNode(
+                value));
+      }, null, value, arguments.length);
+    },
+
+    wrapAll: function (html) {
+      if (jQuery.isFunction(html)) {
+        return this.each(function (i) {
+          jQuery(this).wrapAll(html.call(this, i));
+        });
+      }
+
+      if (this[0]) {
+        // The elements to wrap the target around
+        var wrap = jQuery(html, this[0].ownerDocument).eq(0).clone(true);
+
+        if (this[0].parentNode) {
+          wrap.insertBefore(this[0]);
+        }
+
+        wrap.map(function () {
+          var elem = this;
+
+          while (elem.firstChild && elem.firstChild.nodeType === 1) {
+            elem = elem.firstChild;
+          }
+
+          return elem;
+        }).append(this);
+      }
+
+      return this;
+    },
+
+    wrapInner: function (html) {
+      if (jQuery.isFunction(html)) {
+        return this.each(function (i) {
+          jQuery(this).wrapInner(html.call(this, i));
+        });
+      }
+
+      return this.each(function () {
+        var self = jQuery(this),
+            contents = self.contents();
+
+        if (contents.length) {
+          contents.wrapAll(html);
+
+        } else {
+          self.append(html);
+        }
+      });
+    },
+
+    wrap: function (html) {
+      var isFunction = jQuery.isFunction(html);
+
+      return this.each(function (i) {
+        jQuery(this).wrapAll(isFunction ? html.call(this, i) : html);
+      });
+    },
+
+    unwrap: function () {
+      return this.parent().each(function () {
+        if (!jQuery.nodeName(this, "body")) {
+          jQuery(this).replaceWith(this.childNodes);
+        }
+      }).end();
+    },
+
+    append: function () {
+      return this.domManip(arguments, true, function (elem) {
+        if (this.nodeType === 1 || this.nodeType === 11 || this.nodeType
+            === 9) {
+          this.appendChild(elem);
+        }
+      });
+    },
+
+    prepend: function () {
+      return this.domManip(arguments, true, function (elem) {
+        if (this.nodeType === 1 || this.nodeType === 11 || this.nodeType
+            === 9) {
+          this.insertBefore(elem, this.firstChild);
+        }
+      });
+    },
+
+    before: function () {
+      return this.domManip(arguments, false, function (elem) {
+        if (this.parentNode) {
+          this.parentNode.insertBefore(elem, this);
+        }
+      });
+    },
+
+    after: function () {
+      return this.domManip(arguments, false, function (elem) {
+        if (this.parentNode) {
+          this.parentNode.insertBefore(elem, this.nextSibling);
+        }
+      });
+    },
+
+    // keepData is for internal use only--do not document
+    remove: function (selector, keepData) {
+      var elem,
+          i = 0;
+
+      for (; (elem = this[i]) != null; i++) {
+        if (!selector || jQuery.filter(selector, [elem]).length > 0) {
+          if (!keepData && elem.nodeType === 1) {
+            jQuery.cleanData(getAll(elem));
+          }
+
+          if (elem.parentNode) {
+            if (keepData && jQuery.contains(elem.ownerDocument, elem)) {
+              setGlobalEval(getAll(elem, "script"));
+            }
+            elem.parentNode.removeChild(elem);
+          }
+        }
+      }
+
+      return this;
+    },
+
+    empty: function () {
+      var elem,
+          i = 0;
+
+      for (; (elem = this[i]) != null; i++) {
+        // Remove element nodes and prevent memory leaks
+        if (elem.nodeType === 1) {
+          jQuery.cleanData(getAll(elem, false));
+        }
+
+        // Remove any remaining nodes
+        while (elem.firstChild) {
+          elem.removeChild(elem.firstChild);
+        }
+
+        // If this is a select, ensure that it displays empty (#12336)
+        // Support: IE<9
+        if (elem.options && jQuery.nodeName(elem, "select")) {
+          elem.options.length = 0;
+        }
+      }
+
+      return this;
+    },
+
+    clone: function (dataAndEvents, deepDataAnd

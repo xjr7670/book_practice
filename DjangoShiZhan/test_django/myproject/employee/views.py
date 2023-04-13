@@ -3,6 +3,7 @@ import traceback
 
 from django.shortcuts import render, redirect, HttpResponse
 from .models import Employee2, Department, Group, EmployeeInfo
+from . import forms
 
 
 def list_dep_old(request):
@@ -205,4 +206,87 @@ def test_foreign(request):
 
     return HttpResponse((f"1. 正向关联：员工名称：{emp.name}；所在部门名称：{dep_name}，<br>"
                          f"2. 反向查找：部门名称：{dep_obj.dep_name}；部门员工：{emp_names}"))
+
+
+def index(request):
+    return render(request, 'test_orm/index.html')
+
+
+def list_employee(request):
+    emp_all = Employee2.objects.all()
+    return render(request, 'test_orm/list_employee.html', {'emp_list': emp_all})
+
+
+def add_employee(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        dep = request.POST.get('dep')
+        info = request.POST.get('info')
+        salary = request.POST.get('salary')
+        groups = request.POST.getlist('group')
+        new_emp = Employee2.objects.create(name=name, email=email, salary=salary, dep_id=dep, info_id=info)
+        new_emp.group.set(groups)
+        return redirect('/test_orm/list_employee/')
+
+    dep_list = Department.objects.all()
+    group_list = Group.objects.all()
+    info_list = EmployeeInfo.objects.all()
+    return render(request,
+                  'test_orm/add_employee.html',
+                  {'dep_list': dep_list, 'group_list': group_list, 'info_list': info_list})
+
+
+def edit_employee(request, emp_id):
+    if request.method == 'POST':
+        id = request.POST.get('id')
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        dep = request.POST.get('dep')
+        info = request.POST.get('info')
+        groups = request.POST.getlist('group')
+        emp = Employee2.objects.get(id=id)
+        emp.name = name
+        emp.email = email
+        emp.dep_id = dep
+        emp.info_id = info
+        emp.group.set(groups)
+        emp.save()
+        return redirect('/test_orm/list_employee/')
+
+    emp = Employee2.objects.get(id=emp_id)
+    dep_list = Department.objects.all()
+    group_list = Group.objects.all()
+    info_list = EmployeeInfo.objects.all()
+    return render(request,
+                  'test_orm/edit_employee.html',
+                  {'emp': emp, 'dep_list': dep_list, 'info_list': info_list})
+
+
+def list_dep(request):
+    dep_list = Department.objects.all()
+    return render(request, 'test_orm/list_dep.html', {'dep_list': dep_list})
+
+
+def list_employeeinfo(request):
+    empinfo = EmployeeInfo.objects.all()
+    return render(request, 'test_orm/list_employeeinfo.html', {'info_list': empinfo})
+
+
+def testform(request):
+    if request.method == 'POST':
+        test_form = forms.TestForm(request.POST)
+        if test_form.is_valid():
+            account = test_form.cleaned_data.get('account')
+            pw = test_form.cleaned_data.get('password')
+            if account == 'test' and pw == '123':
+                return HttpResponse('Login Success!')
+            else:
+                return HttpResponse('Username or password error!')
+        else:
+            return HttpResponse('Data Format Error!')
+
+    test_form = forms.TestForm()
+    return render(request, 'test_orm/test_form.html', {'testform': test_form})
+
 

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tes For Loop</title>
+</head>
+<body>
+  {% for name in vlist %}
+    {% if forloop.first %}
+      第一条记录： {{ name }}
+      <hr>
+    {% endif %}
+    从 1 开始计数：{{ forloop.counter }} -- {{ name }}
+    <br>
+    从 0 开始计数：{{ forloop.counter0 }} -- {{ name }}
+    <br>
+    反向计数：{{ forloop.revcounter }} -- {{ name }}
+    <hr>
+    {% if forloop.last %}
+      最后一条记录：{{ name }}
+      <hr>
+    {% endif %}
+  {% endfor %}
+</body>
+</html>

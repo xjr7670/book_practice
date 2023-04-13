@@ -1,0 +1,31 @@
+{% load static %}
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>Login Page</title>
+  <link rel="icon" href="{% static 'favicon.ico' %}">
+  <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link ref="stylesheet" href="{% static 'fontawesome/css/font-awesome.min.css' %}">
+  <link href="{% static 'singin.css' %}" rel="stylesheet">
+</head>
+<body>
+<div  class="container">
+  <form action="/login/" method="post" class="form-signin">
+    {% csrf_token %}
+    <h2 class="form-signin-heading">Please Login</h2>
+    <label for="{{ form_obj.account.id_for_label }}" class="sr-only">{{ form_obj.account.label }}</label>
+    {{ form_obj.account }}
+    <br>
+    <label for="{{ form_obj.pwd.id_for_label }}" class="only">{{ form_obj.pwd.label }}</label>
+    {{ form_obj.pwd }}
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+  </form>
+</div>
+<script src="{% static 'jquery-3.6.4.min.js' %}"></script>
+<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+</body>
+</html>

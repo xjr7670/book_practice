@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smart.orm.domain.ForumMyBatisDao">
+    <select id="getForum" resultType="Forum" parameterType="int">
+        SELECT
+         forum_id forumId,
+         forum_name forumName,
+         forum_desc forumDesc
+        FROM t_forum
+        WHERE forum_id = #{forumId}
+    </select>
+
+    <insert id="addForum" parameterType="Forum">
+        INSERT INTO t_forum(forum_id, forum_name, forum_desc)
+        VALUES (#{forumId}, #{forumName}, #{forumDesc})
+    </insert>
+    <update id="updateForum" parameterType="Forum">
+        UPDATE t_forum f
+        SET forum_name=#{forumName}, forum_desc=#{forumDesc}
+        WHERE f.forum_id = #{forumId}
+    </update>
+</mapper>

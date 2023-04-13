@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Page</title>
+</head>
+<body>
+  <div align="center">
+    <h2>Login Page</h2>
+    <hr>
+    <form method="post" action="/test_view/login/">
+      {% csrf_token %}
+      <div style="margin-top:6px; margin-bottom:6px;">
+        <label for="">用户名：</label>
+        <input type="text" name="account" value="{{ account_two }}">
+      </div>
+      <div style="margin-top:6px; margin-bottom: 6px;">
+        <label for="">密码：</label>
+        <input type="password" name="password">
+      </div>
+      <div style="margin-top: 6px; margin-bottom: 6px;">
+        <input type="checkbox" name="remember">记住登录用户名
+      </div>
+      <div style="color:red">
+        {{ errmsg }}
+      </div>
+      <div style="margin-top: 6px; margin-bottom: 6px">
+        <input type="submit" value="登录">
+      </div>
+    </form>
+  </div>
+</body>
+</html>

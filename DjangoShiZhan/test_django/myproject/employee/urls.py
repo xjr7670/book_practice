@@ -20,5 +20,11 @@ urlpatterns = [
     path('del_employeeinfo_old/<int:info_id>/', del_employeeinfo_old),
     path('edit_employeeinfo_old/<int:info_id>/', edit_employeeinfo_old),
     path('test_foreign/', test_foreign),
-
+    path('index/', index),
+    path('list_employee/', list_employee),
+    path('add_employee/', add_employee),
+    path('edit_employee/<int:emp_id>/', edit_employee),
+    path('list_dep/', list_dep),
+    path('list_employeeinfo/', list_employeeinfo),
+    path('test_form/', testform),
 ]

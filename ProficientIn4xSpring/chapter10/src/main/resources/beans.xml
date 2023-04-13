@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+    <!-- 1 引入 DAO 和 DataSource 的配置文件 -->
+    <import resource="classpath:applicationContext-dao.xml" />
+
+    <!-- 2 声明式事务管理器 -->
+    <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
+    <!-- 3 需要实施事务增强的目标业务 Bean -->
+    <bean id="bbtForumTarget"
+          class="package com.smart.service.BbtForum"
+          p:forumDao-ref="forumDao"
+          p:topicDao-ref="topicDao"
+          p:postDao-ref="postDao" />
+
+    <bean id="bbtForum"
+          class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"
+          p:transactionManger-ref="txManager"
+          p:target-ref="bbtForumTarget">
+
+        <property name="transactionAttributes">
+            <props>
+                <prop key="get*">PROPAGATION_REQUIRED, readOnly</prop>
+                <prop key="*">PROPAGATION_REQUIRED</prop>
+            </props>
+        </property>
+    </bean>
+</beans>

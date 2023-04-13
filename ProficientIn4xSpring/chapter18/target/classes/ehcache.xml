@@ -1,0 +1,12 @@
+<ehcache>
+    <diskStore path="java.io.tmpdir" />
+    <defaultCache maxElementsInMemory="10000" eternal="false"
+                  overflowToDisk="false" timeToIdleSeconds="0" timeToLiveSeconds="0"
+                  diskPersistent="false" diskExpiryThreadIntervalSeconds="120" />
+    <!-- 存放 Board 的缓存区 -->
+    <cache name="fixedRegion" maxElementsInMemory="10000"
+           eternal="true" overflowToDisk="false" />
+    <!-- 存放 User, Topic, Post 的缓存区 -->
+    <cache name="freqChangeRegion" maxElementsInMemory="5000" eternal="false"
+           overflowToDisk="true" timeToIdleSeconds="300" timeToLiveSeconds="1800" />
+</ehcache>

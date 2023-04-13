@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+    <aop:config proxy-target-class="true">
+        <aop:pointcut id="greetToPointcut" expression="target(com.smart.NaiveWaiter) and execution(* greetTo(..))"/>
+        <aop:aspect ref="adviceMethods">
+            <aop:before method="preGreeting" pointcut-ref="greetToPointcut" />
+        </aop:aspect>
+        <aop:aspect ref="adviceMethods">
+            <aop:after method="postGreeting" pointcut-ref="greetToPointcut" />
+        </aop:aspect>
+        <aop:aspect ref="adviceMethods">
+            <aop:after-returning method="afterReturning" pointcut="target(com.smart.SmartSeller)" returning="retVal" />
+        </aop:aspect>
+        <!-- 环绕增强 -->
+        <aop:aspect ref="adviceMethods">
+            <aop:around method="aroundMethod" pointcut="execution(* serveTo(..)) and within(com.smart.Waiter)" />
+        </aop:aspect>
+        <!-- 抛出异常增强 -->
+        <aop:aspect ref="adviceMethods">
+            <aop:after-throwing method="afterThrowingMethod" pointcut="target(com.smart.SmartSeller)) and executor(* checkBill(..))" throwing="iae" />
+        </aop:aspect>
+        <!-- Final 增强 -->
+        <aop:aspect ref="adviceMethods">
+            <aop:after method="afterMethod" pointcut="execution(* com..*.Waiter.greetTo(..))" />
+        </aop:aspect>
+        <!-- 引介增强 -->
+        <aop:aspect ref="adviceMethods">
+            <aop:declare-parents types-matching="com.smart.Waiter+" implement-interface="com.smart.Seller" default-impl="com.smart.SmartSeller" />
+        </aop:aspect>
+        <!-- 绑定连接点参数到增强方法 -->
+        <aop:aspect ref="adviceMethods">
+            <aop:before method="bindParams" pointcut="target(com.smart.NaiveWaiter) and args(name, num, ..)" />
+        </aop:aspect>
+    </aop:config>
+
+    <bean id="adviceMethods" class="com.smart.schema.AdviceMethods" />
+    <bean id="naiveWaiter" class="com.smart.NaiveWaiter" />
+    <bean id="naughtyWaiter" class="com.smart.NaughtyWaiter" />
+    <bean id="smartSeller" class="com.smart.SmartSeller" />
+</beans>

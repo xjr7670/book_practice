@@ -39,6 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'myapp',
     'employee',
+    'test_view',
+    'myapp.templatetags',
+    'test_form',
+
 ]
 
 MIDDLEWARE = [
@@ -131,3 +135,6 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS=(
     os.path.join(BASE_DIR, 'static'),
 )
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

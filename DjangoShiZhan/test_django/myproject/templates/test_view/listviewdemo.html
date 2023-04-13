@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List View Demo</title>
+</head>
+<body>
+<div align="center">
+  <h2>当前登录人员：{{ loguser.account }}</h2>
+  <hr>
+  <table cellspacing="16px">
+    <thead>
+    <tr align="center">
+      <th>头像</th>
+      <th>姓名</th>
+      <th>邮箱</th>
+      <th>性别</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for person in person_list %}
+    <tr>
+      <td><img src="/static/media/{{ person.head_img }}" style="height:60px;width:60px"></td>
+      <td>{{ person.name }}</td>
+      <td>{{ person.email }}</td>
+      <td>{{ person.get_gender_display }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+      <td colspan="7">无相关记录！</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+</body>
+</html>

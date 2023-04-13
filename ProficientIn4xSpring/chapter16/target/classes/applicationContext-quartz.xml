@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+
+    <context:property-placeholder location="classpath:jdbc.properties" />
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+          destroy-method="close"
+          p:driverClassName="com.mysql.jdbc.Driver"
+          p:url="jdbc:mysql://localhost:3306/sampledb"
+          p:username="root"
+          p:password="root" />
+
+    <!-- 通过 JobDetailBean 实现 -->
+    <bean name="jobDetail" class="org.springframework.scheduling.quartz.JobDetailBean"
+          p:jobClass="com.smart.quartz.MyJob"
+          p:applicationContextJobDataKey="applicationContext">
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="size" value="10" />
+            </map>
+        </property>
+    </bean>
+
+    <!-- 通过封装服务类方法实现 -->
+    <bean id="jobDetail1_1"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean"
+          p:targetObject-ref="myService"
+          p:targetMethod="doJob"
+          p:concurrent="false" />
+
+    <bean id="myService" class="com.smart.service.MyService" />
+
+    <!-- SimpleTrigger -->
+    <bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean"
+          p:jobDetail-ref="jobDetail"
+          p:startDelay="1000"
+          p:repeatInterval="2000"
+          p:repeatCount="100">
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="count" value="10" />
+            </map>
+        </property>
+    </bean>
+
+    <!-- ConTriggerFactoryBean -->
+    <bean id="checkImagesTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean"
+          p:jobDetail-ref="jobDetail"
+          p:cronExpression="0/5 * * * * ?" />
+
+    <!-- Scheduler -->
+    <bean id="scheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="simpleTrigger" />
+            </list>
+        </property>
+        <property name="schedulerContextAsMap">
+            <map>
+                <entry key="timeout" value="30" />
+            </map>
+        </property>
+
+        <property name="configLocation" value="classpath:com/smart/quartz/quartz.properties" />
+    </bean>
+</beans>

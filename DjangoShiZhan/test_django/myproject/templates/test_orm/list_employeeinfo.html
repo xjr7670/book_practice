@@ -1,0 +1,39 @@
+{% extends 'test_orm/base.html' %}
+{% block page_content %}
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">员工补充信息</h3>
+  </div>
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-md-3 pull-right" style="margin-bottom:15px">
+      <a href="/test_orm_old/add_employeeinfo_old/" class="btn btn-primary pull-right"><i class="fa fa-user-plus fa-fw" aria-hidden="true"></i>增加一条记录</a>
+    </div>
+    <table border="1" class="table table-bordered table-condensed table-striped table-hover">
+      <thead>
+      <tr>
+        <td>电话号码</td>
+        <td>家庭住址</td>
+        <td colspan="2">操作</td>
+      </tr>
+      </thead>
+      <tbody>
+      {% for info in info_list %}
+        <tr>
+          <td>{{ info.phone }}</td>
+          <td>{{ info.address }}</td>
+          <td><a class="btn btn-danger" href="/test_orm_old/del_employeeinfo_old/{{ info.id }}/"><i class="fa fa-trash-o fa-fw" aria-hidden="true"></i>删除</a></td>
+          <td><a  class="btn btn-info" href="/test_orm_old/edit_employeeinfo_old/{{ info.id }}/"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>修改</a></td>
+        </tr>
+      {% empty %}
+      <tr>
+        <td colspan="4">无相关记录</td>
+      </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}
+{% block employeecls %}
+active
+{% endblock %}

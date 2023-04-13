@@ -1,0 +1,7 @@
+<com.smart.oxm.domain.User>
+  <userId>2</userId>
+  <userName>John</userName>
+  <password>986324</password>
+  <credits>20</credits>
+  <lastIp>192.168.1.130</lastIp>
+</com.smart.oxm.domain.User>

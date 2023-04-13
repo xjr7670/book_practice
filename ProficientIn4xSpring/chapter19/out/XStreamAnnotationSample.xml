@@ -1,0 +1,16 @@
+<user id="1">
+  <username>xstream</username>
+  <credits>0</credits>
+  <com.smart.oxm.domain.LoginLog>
+    <loginLogId>0</loginLogId>
+    <userId>0</userId>
+    <ip>192.168.1.91</ip>
+    <loginDate>2020-05-18 13:02:38.131 UTC</loginDate>
+  </com.smart.oxm.domain.LoginLog>
+  <com.smart.oxm.domain.LoginLog>
+    <loginLogId>0</loginLogId>
+    <userId>0</userId>
+    <ip>192.168.1.92</ip>
+    <loginDate>2020-05-18 13:02:38.131 UTC</loginDate>
+  </com.smart.oxm.domain.LoginLog>
+</user>

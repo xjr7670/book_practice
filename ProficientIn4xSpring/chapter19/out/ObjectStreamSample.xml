@@ -1,0 +1,6 @@
+<object-stream>
+  <com.smart.oxm.domain.User>
+    <userId>0</userId>
+    <credits>0</credits>
+  </com.smart.oxm.domain.User>
+</object-stream>
