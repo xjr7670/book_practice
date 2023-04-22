@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'test_view',
     'myapp.templatetags',
     'test_form',
-
+    'book',
 ]
 
 MIDDLEWARE = [

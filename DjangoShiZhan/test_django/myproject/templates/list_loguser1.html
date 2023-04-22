@@ -1,0 +1,90 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author">
+    <title>账号信息列表</title>
+    <link rel="icon" href="{% static 'favicon.ico' %}" >
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'fontawesome/css/font-awesome.min.css' %}">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-offset-2 col-md-8">
+            <div class="page-header">
+                <h1>Sample Index Page<small>--Account info list</small></h1>
+            </div>
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title" >Account Info</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-3 pull-right" style="margin-botton:15px">
+                            <div><a href="/test_form/add_loguserm/" class="btn btn-primary pull-right"><i class="fa fa-user-plus fa-fw"></i>&nbsp;Add</a></div>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-bordered table-condensed table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th>账号</th>
+                        <th>邮箱</th>
+                        <th>性别</th>
+                        <th>爱好</th>
+                        <th>头发数量</th>
+                        <th colspan="2">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for usr in usr_list %}
+                    <tr>
+                        <td>{{ usr.account }}</td>
+                        <td>{{ usr.email }}</td>
+                        <td>
+                            {% if usr.gender == '1' %}
+                            男
+                            {% else %}
+                            女
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if usr.hobby == '1' %}
+                            游泳
+                            {% elif usr.hobby == '2' %}
+                            自行车
+                            {% else %}
+                            跑酷
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if usr.hair == '1' %}
+                            很多
+                            {% elif usr.hair == '2' %}
+                            一般
+                            {% else %}
+                            很少
+                            {% endif %}
+                        </td>
+                        <td><a href="/test_form/del_loguserm/{{ usr.id }}/" class="btn btn-danger"><i class="fa fa-trash-o fa-fw" aria-hidden="true"></i>&nbsp;Del </a></td>
+                        <td><a href="/test_form/edit_loguserm/{{ usr.id }}/" class="btn btn-info"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;Edit </a></td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="7">无相关记录！</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="{% static 'jquery-3.6.4.min.js' %}"></script>
+<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+</body>
+</html>
