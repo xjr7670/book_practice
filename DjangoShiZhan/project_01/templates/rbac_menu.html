@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width">
+    <title>Rbac Menu</title>
+    <link href="{% static 'boostrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <script src="{% static 'jquery-3.6.4.min.js' %}"></script>
+</head>
+<body>
+{% for k, item in menu_result.items %}
+<div class="top_menu">{{ item.menu_title }}</div>
+{% if item.active %}
+<div class="sub_menu">
+{% else %}
+<div class="sub_menu nodisplay">
+{% endif %}
+{% for v in item.children %}
+    {% if v.active %}
+    <a href="{{ v.url }}" class="active"><h4>{{ v.title }}</h4></a>
+    {% else %}
+    <a href="{{ v.url }}">{{ v.title }}</a>
+    {% endif %}
+{% endfor %}
+</div>
+</body>
+</html>

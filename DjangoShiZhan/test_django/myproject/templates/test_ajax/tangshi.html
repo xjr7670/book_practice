@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ajax Test</title>
+</head>
+<body>
+<div align="center">
+  <br>
+  <label>静夜思</label>
+  <hr>
+  <div><input type="text" id="ts1" value="床前明月光"> </div>
+  <div><input type="text" id="ts2" value="疑是地上霜"> </div>
+  <div><input type="button" id="btn1" value="补全唐诗"> </div>
+  <div><input type="text" id="ts3" value=""> </div>
+  <div><input type="text" id="ts4" value=""> </div>
+  <div><input type="button" id="btn2" value="诗配图"> </div>
+  <br>
+  <div id="img"></div>
+</div>
+<script src="{% static 'jquery-3.6.4.min.js' %}"></script>
+<script>
+  $("#btn1").on("click", function() {
+    var ts1 = $("#ts1").val();
+    var ts2 = $("#ts2").val();
+    $.ajax({
+      url: "/test_ajax/tangshi_ret/",
+      type: "get",
+      data: {"ts1": ts1, "ts2": ts2},
+      success: function(arg) {
+        data = JSON.parse(arg)
+        $("#ts3").val(data['ts3']);
+        $("#ts4").val(data['ts4']);
+      }
+    })
+  });
+
+  $("#btn2").on("click", function() {
+    $.ajax({
+      url: "/test_ajax/tangshi_img/",
+      type: "get",
+      success: function(imgsrc) {
+        var img = document.createElement("img");
+        img.src = imgsrc;
+        $("#img").after(img);
+        $("#btn2").attr("disabled", true);
+      }
+    })
+  });
+</script>
+</body>
+</html>

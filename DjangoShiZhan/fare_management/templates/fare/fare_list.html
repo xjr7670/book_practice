@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% block page_content %}
+<div class="panel panel-primary">
+    <div class="panel-heading">当日车费上报</div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-offset-1 col-md-10" style="margin-botton: 15px;">
+                <a href="/fare/fareadd/" type="button" class="btn btn-primary" style="float: right;">
+                    <i class="fa fa-plus" aria-hidden="true" style="margin-right: 6px;"></i>增加
+                </a>
+            </div>
+        </div>
+        <table class="table table-striped table-hover table-bordered">
+            <thead>
+            <th class="bg-info text-center">用车部门</th>
+            <th class="bg-info text-center">乘车人</th>
+            <th class="bg-info text-center">车牌号</th>
+            <th class="bg-info text-center">司机</th>
+            <th class="bg-info text-center">单价</th>
+            <th class="bg-info text-center">公里数</th>
+            <th class="bg-info text-center">车费</th>
+            <th class="bg-info text-center">乘车时间</th>
+            <th class="bg-info text-center">乘车说明</th>
+            <th class="bg-info text-center">录入人员</th>
+            <th class="bg-info text-center" colspan="2">允许的操作</th>
+            </thead>
+            <tbody>
+            {% for row in fare_list %}
+            <tr rowid="{{ row.id }}">
+                <td>{{ row.dep.dep_name }}</td>
+                <td>{{ row.passenger }}</td>
+                <td>{{ row.car.plate_number }}</td>
+                <td>{{ row.car.driver }}</td>
+                <td class="text-right">{{ row.car.price }}</td>
+                <td class="text-right">{{ row.distance }}</td>
+                <td class="text-right">{{ row.fare }}</td>
+                <td>{{ row.drive_date|date:'Y-m-d' }}</td>
+                <td>{{ row.remark }}</td>
+                <td>{{ row.operator }}</td>
+                <td>
+                    <a href="/fare/fareedit/{{ row.id }}/" class="btn btn-info"><i class="fa fa-pencil-square-o" aria-hidden="true" style="margin-right: 6px;"></i>编辑 </a>
+                </td>
+                <td>
+                    <button class="btn btn-danger" data-toggle="modal" data-target="#delModal" data-rowid="{{ row.id }}"><i class="fa fa-trash-o fa-fw" aria-hidden="true" style="margin-right: 6px;"></i>删除 </button>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="modal fade" id="delModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="alert alert-danger" role="alert">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">删除记录</h4>
+            </div>
+            <div class="modal-body">
+                <p>将要删除这条记录，确认吗？</p>
+                <input type="hidden" id="rowid">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" onclick="del_ok()">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $('#delModal').on('show.bs.modal', function(event) {
+    var button = $(event.relatedTarget);
+    var vrowid = button.data('rowid');
+    var modal = $(this);
+    modal.find('#rowid').val(vrowid);
+    });
+
+    function del_ok() {
+        var rowid = $("#rowid").val();
+        $.ajax({
+            url: "/fare/faredel/" + rowid + "/",
+            type: "GET",
+            success: function(data) {
+                var dic = JSON.parse(data);
+                if (dic.status) {
+                    window.location.href="/fare/farelist/";
+                    $('#myModal').modal('hide');
+                }
+            }
+        });
+    }
+</script>
+{% endblock %}

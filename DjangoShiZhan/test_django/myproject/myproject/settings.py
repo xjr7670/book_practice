@@ -43,6 +43,10 @@ INSTALLED_APPS = [
     'myapp.templatetags',
     'test_form',
     'book',
+    'test_page',
+    'test_ajax',
+    'test_middleware',
+    'test_auth',
 ]
 
 MIDDLEWARE = [
@@ -53,19 +57,21 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'test_middleware.middlewares.middlewaretest1.Middle1',
+    'test_middleware.middlewares.middlewaretest1.Middle2'
 ]
 
 ROOT_URLCONF = 'myproject.urls'
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'BACKEND': 'django.templates.backends.django.DjangoTemplates',
         'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
+                'django.templates.context_processors.debug',
+                'django.templates.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],

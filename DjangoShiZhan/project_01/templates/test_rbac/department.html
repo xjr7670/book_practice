@@ -1,0 +1,31 @@
+{% extends 'test_rbac/base.html' %}
+{% block content %}
+<div align="center">
+  <h2>View department</h2>
+  <p></p>
+  <table border="1" width="600px">
+    <thead>
+    <th>Allow</th>
+    </thead>
+    <tbody>
+    <tr>
+      <td>
+        {% if pagpermission.has_edit %}
+        <a href="/department/edit/66/">Edit</a>
+        {% endif %}
+        {% if pagpermission.has_del %}
+        <a href="/department/del/66/">Del</a>
+        {% endif %}
+        {% if pagpermission.has_add %}
+        <a href="/department/add/">Add</a>
+        {% endif %}
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <br>
+  {% if perms.test_auth.userinfo_add %}
+  <a href="/test_auth/userinfo/add/">Add User</a>
+  {% endif %}
+</div>
+{% endblock %}

@@ -34,4 +34,8 @@ urlpatterns = [
     path('media/<path:path>', serve, {'document_root': settings.MEDIA_ROOT}),
     path('test_orm/', include('employee.urls')),
     path('test_form/', include('test_form.urls')),
+    path('test_page/', include('test_page.urls')),
+    path('test_ajax/', include('test_ajax.urls')),
+    path('test_middleware/', include('test_middleware.urls')),
+    path('test_auth/', include('test_auth.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

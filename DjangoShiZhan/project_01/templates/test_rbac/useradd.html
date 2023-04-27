@@ -1,0 +1,14 @@
+{% extends 'test_rbac/base.html' %}
+{% block content %}
+<div align="center">
+  <br>
+  <br>
+  <h2>add user</h2>
+  <form action="" method="post">
+    {% csrf_token %}
+    <p>No.: <input type="text" name="bianhao"> </p>
+    <p>Name: <input type="text" name="name"></p>
+    <input type="submit" value="Submit">
+  </form>
+</div>
+{% endblock %}
