@@ -25,17 +25,7 @@
     </div>
   </div>
   <div class="row" style="margin-top: 60px">
-    <div class="col-sm-3 col-md-2 sidebar">
-      <ul class="nav nav-sidebar">
-        <li><a href="/fare/carlist/">车辆信息管理</a> </li>
-        <li><a href="/fare/deplist/">部门信息列表</a> </li>
-        <li><a href="/fare/userlist/">用户分配到部门</a> </li>
-        <li><a href="/fare/farelist/">当日车费上报</a> </li>
-        <li><a href="/fare/farecheck/">车费审批</a> </li>
-        <li><a href="/fare/farecheck2/">取消审批</a> </li>
-        <li><a href="/fare/annotate/">车费统计</a> </li>
-      </ul>
-    </div>
+    {% rbac_menu request %}
     <div class="col-sm8 col-sm-offset-4 col-md-10 col-md-offset-2 main">
       {% block page_content %}
       {% endblock %}

@@ -3,10 +3,29 @@ import json
 
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, redirect, HttpResponse
+from django.db.models import Sum
 
 from . import models
 from rbac import models as rbac_models
+from rbac.service.init_permission import init_permission
+from utils.paginater import Paginater
 
+
+class BasePermPage(object):
+    def __init__(self, code_list):
+        self.code_list = code_list
+
+    def has_add(self):
+        if 'add' in self.code_list:
+            return True
+
+    def has_del(self):
+        if 'del' in self.code_list:
+            return True
+
+    def has_edit(self):
+        if 'edit' in self.code_list:
+            return True
 
 def login(request):
     if request.method == 'GET':
@@ -16,6 +35,7 @@ def login(request):
         password = request.POST.get('password')
         user = rbac_models.UserInfo.objects.filter(username=username, password=password).first()
         if user:
+            init_permission(request, user)
             request.session['user_nickname'] = user.nickname
             request.session['user_dep'] = user.loguser.dep_id
             return redirect('/fare/index/')
@@ -35,8 +55,9 @@ def index(request):
 
 
 def carlist(request):
+    pagpermission = BasePermPage(request.session.get('permission_codes'))
     carlist = models.CarInfo.objects.all()
-    return render(request, 'fare/carinfo_list.html', {'carlist': carlist})
+    return render(request, 'fare/carinfo_list.html', {'carlist': carlist, 'pagpermission': pagpermission})
 
 
 def caradd(request):
@@ -215,4 +236,278 @@ def fareedit(request, fareid):
     fare_obj = models.Fare.objects.get(id=fareid)
     car_list = models.CarInfo.objects.all()
     return render(request, 'fare/fare_edit.html', {'obj': fare_obj, 'carlist': car_list})
+
+
+def farecheck(request):
+    dep_list = models.Department.objects.all()
+    if request.method == 'POST':
+        dep_id = request.POST.get('department', None)
+        drive_date1 = request.POST.get('drive_date1', None)
+        drive_date2 = request.POST.get('drive_date2', None)
+        conditions_dic = {'approve_status': '0'}
+        if dep_id:
+            conditions_dic['dep_id'] = int(dep_id)
+        if drive_date1:
+            conditions_dic['drive_date__gte'] = drive_date1
+        if drive_date2:
+            conditions_dic['drive_date__lte'] = drive_date2
+        if conditions_dic:
+            total_count = models.Fare.objects.filter(**conditions_dic).count()
+        else:
+            total_count = models.Fare.objects.all().count()
+
+        cur_page_num = request.GET.get('page')
+        if not cur_page_num:
+            cur_page_num = '1'
+
+        one_page_lines = 10
+        page_maxtag = 7
+        page_obj = Paginater(url_address='/fare/farecheck/',
+                             cur_page_num=cur_page_num,
+                             total_rows=total_count,
+                             one_page_lines=one_page_lines,
+                             page_maxtag=page_maxtag)
+        if conditions_dic:
+            fare_list = models.Fare.objects.filter(**conditions_dic).order_by('drive_date')[page_obj.data_start:page_obj.data_end]
+        else:
+            fare_list = models.Fare.objects.all().order_by('drive_date')[page_obj.data_start:page_obj.data_end]
+        return render(request,
+                      'fare/farelist_check.html',
+                      {'fare_list': fare_list,
+                       'page_nav': page_obj.html_page(),
+                       'dep_list': dep_list,
+                       'conditins': conditions_dic})
+
+    cur_page_num = request.GET.get('page')
+    if not cur_page_num:
+        cur_page_num = '1'
+    total_count = models.Fare.objects.filter(approve_status='0').count()
+    one_page_lines = 10
+    page_maxtag = 7
+    page_obj = Paginater(url_address='/fare/farecheck/',
+                         cur_page_num=cur_page_num,
+                         total_rows=total_count,
+                         one_page_lines=one_page_lines,
+                         page_maxtag=page_maxtag)
+    fare_list = models.Fare.objects.filter(approve_status='0').order_by('drive_date')[page_obj.data_start:page_obj.data_end]
+    return render(request,
+                  'fare/farelist_check.html',
+                  {'fare_list': fare_list,
+                   'page_nav': page_obj.html_page(),
+                   'dep_list': dep_list})
+
+
+def fare_approve(request, ids):
+    vids = ids.split(',')
+    int_ids = []
+    for i in vids:
+        ii = int(i)
+        int_ids.append(ii)
+    ret = {'status': False}
+    try:
+        models.Fare.objects.filter(id__in=vids).update(approve_status='1')
+        ret['status'] = True
+    except Exception:
+        ret['status'] = False
+    return HttpResponse(json.dumps(ret))
+
+
+def farecheck2(request):
+    dep_list = models.Department.objects.all()
+    if request.method == 'POST':
+        dep_id = request.POST.get('department', None)
+        drive_date1 = request.POST.get('drive_date1', None)
+        drive_date2 = request.POST.get('drive_date2', None)
+        conditions_dic = {'approve_status': '1'}
+
+        if dep_id:
+            conditions_dic['dep_id'] = int(dep_id)
+        if drive_date1:
+            conditions_dic['drive_date__gte'] = drive_date1
+        if drive_date2:
+            conditions_dic['drive_date__lte'] = drive_date2
+        if conditions_dic:
+            total_count = models.Fare.objects.filter(**conditions_dic).count()
+        else:
+            total_count = models.Fare.objects.all().count()
+        cur_page_num = request.GEt.get('page')
+        if not cur_page_num:
+            cur_page_num = '1'
+        one_page_lines = 10
+        page_maxtag = 7
+        page_obj = Paginater(url_address='/fare/farecheck2/',
+                             cur_page_num=cur_page_num,
+                             total_rows=total_count,
+                             one_page_lines=one_page_lines,
+                             page_maxtag=page_maxtag)
+        if conditions_dic:
+            fare_list = models.Fare.objects.filter(**conditions_dic).order_by('drive_date')[page_obj.data_start:page_obj.data_end]
+        else:
+            fare_list = models.Fare.objects.all().order_by('drive_date')[page_obj.data_start: page_obj.data_end]
+        return render(request,
+                      'fare/farelist_check2.html',
+                      {'fare_list': fare_list,
+                       'page_nav': page_obj.html_page(),
+                       'dep_list': dep_list,
+                       'conditions': conditions_dic})
+
+
+def approve_cancel(request, ids):
+    vids = ids.split(',')
+    int_ids = []
+    for i in vids:
+        ii = int(i)
+        int_ids.append(ii)
+    ret = {'status': False}
+    try:
+        models.Fare.objects.filter(id__in=vids).update(approve_status='0')
+        ret['status'] = True
+    except Exception:
+        ret['status'] = False
+    return HttpResponse(json.dumps(ret))
+
+
+def annotate_fare(request):
+    farelist = models.Fare.objects.values('dep__dep_name',
+                                          'drive_date__year',
+                                          'drive_date__month',
+                                          'approve_status').annotate(sum_distance=Sum('distance'),
+                                                                     sum_fare=Sum('fare')).values('dep__dep_name',
+                                                                                                  'drive_date__year',
+                                                                                                  'drive_date__month',
+                                                                                                  'approve_status',
+                                                                                                  'sum_distance',
+                                                                                                  'sum_fare')
+    faredic = {}
+    begin = True
+    depname = ''
+    distance0_xj = 0
+    fare0_xj = 0
+    distance1_xj = 0
+    fare1_xj = 0
+    distance_xj = 0
+    fare_xj = 0
+    distance0_hj = 0
+    fare0_hj = 0
+    distance1_hj = 0
+    fare1_hj = 0
+    distance_hj = 0
+    fare_hj = 0
+
+    for fare in farelist:
+        if begin:
+            begin = False
+            depname = fare['dep__dep_name']
+        if depname != fare['dep__dep_name']:
+            onefare = {'dep__dep_name': '小计',
+                       'sum_distance0': distance0_xj,
+                       'sum_fare0': fare0_xj,
+                       'sum_distance1': distance1_xj,
+                       'sum_fare1': fare1_xj,
+                       'sum_distance': distance_xj,
+                       'sum_fare': fare_xj}
+            faredic[depname+'xj'] = onefare
+            distance_xj = 0
+            fare0_xj = 0
+            distance1_xj = 0
+            fare1_xj = 0
+            distance_xj = 0
+            fare_xj = 0
+            depname = fare['dep__dep_name']
+        distance_xj += fare['sum_distance']
+        fare_xj += fare['sum_fare']
+        distance_hj += fare['sum_distance']
+        fare_hj += fare['sum_fare']
+        if fare['approve_status'] == '0':
+            distance0_xj += fare['sum_distance']
+            fare0_xj += fare['sum_fare']
+            distance0_hj += fare['sum_distance']
+            fare0_hj += fare['sum_fare']
+        if fare['approve_status'] == '1':
+            distance1_xj += fare['sum_distance']
+            fare1_xj += fare['sum_fare']
+            distance1_hj += fare['sum_distance']
+            fare1_hj += fare['sum_fare']
+
+        vid = fare['dep__dep_name'] + str(fare['drive_date__year']) + str(fare['drive_date__month'])
+        if vid in faredic:
+            if fare['approve_status'] == '0':
+                faredic[vid]['sum_distance0'] = fare['sum_distance']
+                faredic[vid]['sum_fare0'] = fare['sum_fare']
+            if fare['approve_status'] == '1':
+                faredic[vid]['sum_distance1'] = fare['sum_distance']
+                faredic[vid]['sum_fare1'] = fare['sum_fare']
+
+            if 'sum_distance0' in faredic[vid]:
+                distance0 = faredic[vid]['sum_distance0']
+                fare0 = faredic[vid]['sum_fare0']
+            else:
+                distance0 = 0
+                fare0 = 0
+
+            if 'sum_distance1' in faredic[vid]:
+                distance1 = faredic[vid]['sum_distance1']
+                fare1 = faredic[vid]['sum_fare1']
+            else:
+                distance1 = 0
+                fare1 = 0
+
+            faredic[vid]['sum_distance'] = distance0 + distance1
+            faredic[vid]['sum_fare'] = fare0 + fare1
+        else:
+            onefare = {
+                'dep__dep_name': fare['dep__dep_name'],
+                'drive_date__year': fare['drive_date__year'],
+                'drive_date__month': fare['drive_date__month'],
+            }
+            if fare['approve_status'] == '0':
+                onefare['sum_distance0'] = fare['sum_distance']
+                onefare['sum_fare0'] = fare['sum_fare']
+            if fare['approve_status'] == '1':
+                onefare['sum_distance1'] = fare['sum_distance']
+                onefare['sum_fare1'] = fare['sum_fare']
+            faredic[vid] = onefare
+            if 'sum_distance0' in onefare:
+                distance0 = onefare['sum_distance0']
+                fare0 = onefare['sum_fare0']
+            else:
+                distance0 = 0
+                fare0 = 0
+
+            if 'sum_distance1' in onefare:
+                distance1 = onefare['sum_distance1']
+                fare1 = onefare['sum_fare1']
+            else:
+                distance1 = 0
+                fare1 = 0
+
+            onefare['sum_distance'] = distance0 + distance1
+            onefare['sum_fare'] = fare0 + fare1
+            faredic[vid] = onefare
+
+    onefare = {'dep__dep_name': '小计',
+               'sum_distance0': distance0_xj,
+               'sum_fare0': fare0_xj,
+               'sum_distance1': distance1_xj,
+               'sum_fare1': fare1_xj,
+               'sum_distance': distance_xj,
+               'sum_fare': fare_xj}
+    faredic[depname + 'xj'] = onefare
+
+    onefare = {
+        'dep__dep_name': '合计',
+        'sum_distance0': distance0_hj,
+        'sum_fare0': fare0_hj,
+        'sum_distance1': distance1_hj,
+        'sum_fare1': fare1_hj,
+        'sum_distance': distance_hj,
+        'sum_fare': fare_hj,
+    }
+
+    faredic[depname + 'hj'] = onefare
+
+    return render(request, 'fare/fare_addup.html', {'faredic': faredic})
+
+
+
 

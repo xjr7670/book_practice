@@ -20,4 +20,9 @@ urlpatterns = [
     path('fareadd/', views.fareadd),
     path('fareedit/<int:fareid>/', views.fareedit),
     path('faredel/<int:fareid>/', views.faredel),
+    path('farecheck/', views.farecheck),
+    path('fareapprove/<str:ids>/', views.fare_approve),
+    path('farecheck2/', views.farecheck2),
+    path('approvecancel/', views.approve_cancel),
+    path('annotate/', views.annotate_fare),
 ]

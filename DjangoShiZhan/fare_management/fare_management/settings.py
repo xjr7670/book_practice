@@ -49,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'rbac.middleware.rbac.RbacMiddleware',
 ]
 
 ROOT_URLCONF = 'fare_management.urls'
@@ -126,3 +127,10 @@ STATICFILES_DIRS = (
 
 PERMISSION_URL_KEY = 'url_key'
 PERMISSION_MENU_KEY = 'menu_key'
+SAFE_URL = [
+    r'/login/',
+    '/admin/.*',
+    '/test/',
+    '/fare/index/',
+]
+LOGIN_URL = '/login/'
