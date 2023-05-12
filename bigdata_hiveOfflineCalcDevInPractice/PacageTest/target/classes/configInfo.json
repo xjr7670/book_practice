@@ -1,0 +1,32 @@
+{
+  "receivers": [
+    {"region": "佛山", "name": "吕文峰", "email": "lvwenfeng@mengniu.cn"},
+    {"region": "广州", "name": "王永平", "email": "wangyongping3@mengniu.cn"},
+    {"region": "海口", "name": "牟小明", "email": "mouxiaoming@mengniu.cn"},
+    {"region": "梅州", "name": "钟永淼", "email": "zhongyongmiao@mengniu.cn"},
+    {"region": "三亚", "name": "赵永军", "email": "zhaoyongjun@mengniu.cn"},
+    {"region": "深圳", "name": "白风鸣", "email": "gbaifengming@mengniu.cn"},
+    {"region": "湛江", "name": "岳小虎", "email": "yuexiaohu@mengniu.cn"},
+    {"region": "肇庆", "name": "杨虎在", "email": "yanghuzai@mengniu.cn"},
+    {"region": "中山", "name": "朱邦杰", "email": "zhubangjie@mengniu.cn"},
+    {"region": "珠海", "name": "董世忠", "email": "dongshizhong@mengniu.cn"},
+    {"region": "潮州", "name": "钟日超", "email": "zhongrichao@mengniu.cn"},
+    {"region": "潮汕", "name": "何琦", "email": "heqi@mengniu.cn"},
+    {"region": "湛茂", "name": "阮彦科", "email": "ruanyanke@mengniu.cn"},
+    {"region": "海南", "name": "崔鑫", "email": "cuixin@mengniu.cn"},
+    {"region": "粤东北", "name": "张世华", "email": "zhangshihua@mengniu.cn"},
+    {"region": "粤西北", "name": "曾福声", "email": "zengfusheng@mengniu.cn"},
+    {"region": "粤北", "name": "白守凯", "email": "baishoukai@mengniu.cn"},
+    {"region": "粤中和粤西", "name": "刘虎", "email": "liuhu1@mengniu.cn"},
+    {"region": "粤东", "name": "朱丽明", "email": "zhuliming@mengniu.cn"},
+    {"region": "特通", "name": "李清虎", "email": "liqinghu@mengniu.cn"},
+    {"region": "学生奶", "name": "郜明", "email": "gaoming1@mengniu.cn"},
+    {"region": "乳饮料", "name": "张建新", "email": "zhangjianxin3@mengniu.cn"}
+  ],
+  "sender": {
+    "username": "xjr30226@126.com",
+    "password": "",
+    "port": "",
+    "smtp": "smtp.mengniu.cn"
+  }
+}

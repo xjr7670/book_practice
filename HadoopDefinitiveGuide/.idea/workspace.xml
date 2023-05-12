@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="HadoopDefinitiveGuide:jar" />
+    </artifacts-to-build>
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="cdd196b5-8639-4942-a553-cf96f07464a9" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/pom.xml" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/practice/NetIO.java" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="2" />
+  </component>
+  <component name="ProjectId" id="27UiXdtWDpmwrlDWkDBMxa9qWgq" />
+  <component name="ProjectViewState">
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "jdk.selected.JAVA_MODULE": "1.8",
+    "last_opened_file_path": "E:/code/book_practice/IntroductionToJavaProgrammingAndDataStructures_ComprehsnsiveVersion_11Edition/chapter1",
+    "project.structure.last.edited": "Artifacts",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "MavenSettings"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="ch8" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\code\book_practice\HadoopDefinitiveGuide\src\main\java" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="ch6" />
+      <recent name="ch3" />
+    </key>
+  </component>
+  <component name="RunManager" selected="MaxCompute SQL.dev_project.osql">
+    <configuration name="ExampleClient" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ch20.ExampleClient" />
+      <module name="HadoopDefinitiveGuide" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ch20.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ListStatus" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="ch3.ListStatus" />
+      <module name="HadoopDefinitiveGuide" />
+      <option name="PROGRAM_PARAMETERS" value="hdfs://localhost:9000/ hdfs://localhost:9000/tmp hdfs://localhost:9000/user/hive hdfs://localhost:9000/tmp/quangle.txt" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MaxTemp" type="Application" factoryName="Application" temporary="true">
+      <option name="MAIN_CLASS_NAME" value="MaxTemp" />
+      <module name="scala" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MaxTemperature" type="Application" factoryName="Application" temporary="true">
+      <option name="MAIN_CLASS_NAME" value="ch19.MaxTemperature" />
+      <module name="HadoopDefinitiveGuide" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ch19.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MaxTemperatureSpark" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ch19.MaxTemperatureSpark" />
+      <module name="HadoopDefinitiveGuide" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ch19.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="NetIO" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="practice.NetIO" />
+      <module name="HadoopDefinitiveGuide" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="practice.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ch9" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="ch9.SortByTemperatureUsingHashPartitioner" />
+      <module name="HadoopDefinitiveGuide" />
+      <option name="PROGRAM_PARAMETERS" value="all_seq output_hashsort" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="HadoopDefinitiveGuide" type="MavenRunConfiguration" factoryName="Maven" nameIsGenerated="true">
+      <MavenSettings>
+        <option name="myGeneralSettings" />
+        <option name="myRunnerSettings">
+          <MavenRunnerSettings>
+            <option name="delegateBuildToMaven" value="false" />
+            <option name="environmentProperties">
+              <map />
+            </option>
+            <option name="jreName" value="#USE_PROJECT_JDK" />
+            <option name="mavenProperties">
+              <map>
+                <entry key="/user/hive/warehouse/output" value="/user/hive/warehouse/output" />
+                <entry key="file://f:\book_data\HadoopBook\input\ncdc\simple.txt" value="file://f:\book_data\HadoopBook\input\ncdc\simple.txt" />
+              </map>
+            </option>
+            <option name="passParentEnv" value="true" />
+            <option name="runMavenInBackground" value="true" />
+            <option name="skipTests" value="false" />
+            <option name="vmOptions" value="" />
+          </MavenRunnerSettings>
+        </option>
+        <option name="myRunnerParameters">
+          <MavenRunnerParameters>
+            <option name="profiles">
+              <set />
+            </option>
+            <option name="goals">
+              <list />
+            </option>
+            <option name="pomFileName" />
+            <option name="profilesMap">
+              <map />
+            </option>
+            <option name="resolveToWorkspace" value="false" />
+            <option name="workingDirPath" value="$PROJECT_DIR$" />
+          </MavenRunnerParameters>
+        </option>
+      </MavenSettings>
+      <method v="2" />
+    </configuration>
+    <configuration name="dev_project.osql" type="OdpsQLRunnerConfigurationType" factoryName="MaxCompute SQL">
+      <odps_target_file>$APPLICATION_CONFIG_DIR$/scratches/dev_project.osql</odps_target_file>
+      <odps_output_dir>C:\Users\xjr76\AppData\Local\Temp\</odps_output_dir>
+      <job_name>dev_project_osql</job_name>
+      <odps_parameter name="odps.compiler.runmode" value="Studio" />
+      <odps_parameter name="odps.compiler.python.udf.signature.script" value="/util/python3/get_udf_sigs3.py" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Application.ListStatus" />
+      <item itemvalue="Application.ch9" />
+      <item itemvalue="Application.ExampleClient" />
+      <item itemvalue="Application.MaxTemp" />
+      <item itemvalue="Application.MaxTemperature" />
+      <item itemvalue="Application.MaxTemperatureSpark" />
+      <item itemvalue="Application.NetIO" />
+      <item itemvalue="Maven.HadoopDefinitiveGuide" />
+      <item itemvalue="MaxCompute SQL.dev_project.osql" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.ExampleClient" />
+        <item itemvalue="Application.MaxTemperatureSpark" />
+        <item itemvalue="Application.MaxTemperature" />
+        <item itemvalue="Application.MaxTemp" />
+        <item itemvalue="Application.NetIO" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="cdd196b5-8639-4942-a553-cf96f07464a9" name="Changes" comment="" />
+      <created>1649381114584</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1649381114584</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.py" />
+  </component>
+</project>

@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - AnimalTestDrive",
+            "request": "launch",
+            "mainClass": "AnimalTestDrive",
+            "projectName": "chapter7_c6eb9c2d"
+        }
+    ]
+}

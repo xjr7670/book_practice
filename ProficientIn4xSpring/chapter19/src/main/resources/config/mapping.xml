@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<mapping xmlns="http://castor.exolab.org/">
+    <class name="com.smart.oxm.domain.User">
+        <map-to xml="user" />
+        <field name="userId" type="integer">
+            <bind-xml name="userId" node="element" />
+        </field>
+        <field name="logs" type="com.smart.oxm.domain.User" collection="arraylist">
+            <bind-xml name="logs" />
+        </field>
+    </class>
+</mapping>

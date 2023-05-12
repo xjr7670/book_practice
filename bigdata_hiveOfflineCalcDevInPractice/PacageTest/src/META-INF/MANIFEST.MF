@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Main-Class: org.example.App
+Class-Path: json-lib-2.4-jdk15.jar ezmorph-1.0.6.jar commons-collections
+ -3.2.1.jar commons-lang-2.5.jar commons-logging-1.1.1.jar commons-io-2.
+ 6.jar commons-beanutils-1.8.0.jar
+

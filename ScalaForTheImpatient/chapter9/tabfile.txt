@@ -1,0 +1,11 @@
+def myprint(s):
+    print("----- ", s, " -----")
+
+def main():
+    s = "hello"
+    myprint(s)
+
+
+if __name__ == '__main__':
+    main()
+
