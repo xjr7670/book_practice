@@ -1,0 +1,91 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Registe</title>
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}" >
+</head>
+<body>
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <div class="page-header">
+        <h2>用户注册<small>&nbsp;Blog 注册页面</small></h2>
+      </div>
+      <form novalidate action="/registe/" method="post" class="form-horizontal" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="{{ formobj.username.id_for_label }}" class="col-sm-2 control-label">{{ formobj.username.label }}</label>
+          <div class="col-sm-8">
+            {{ formobj.username }}
+            <span class="help-block">{{ formobj.username.errors.0 }}</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="{{ formobj.password.id_for_label }}" class="col-sm-2 control-label">{{ formobj.password.label }}</label>
+          <div class="col-sm-8">
+            {{ formobj.password }}
+            <span class="help-block">{{ formobj.password.errors.0 }}</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="{{ formobj.repassword.id_for_label }}" class="col-sm-2 control-label">{{ formobj.repassword.label }}</label>
+          <div class="col-sm-8">
+            {{ formobj.repassword }}
+            <span class="hlep-block">{{ formobj.repassword.errors.0 }}</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="{{ formobj.nickname.id_for_label }}" class="col-sm-2 control-label">{{ formobj.nickname.label }}</label>
+          <div class="col-sm-8">
+            {{ formobj.nickname }}
+            <span class="help-block">{{ formobj.nickname.errors.0 }}</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="{{ formobj.email.id_for_label }}" class="col-sm-2 control-label">{{ formobj.email.label }}</label>
+          <div class="col-sm-8">
+            {{ formobj.email }}
+            <span class="help-block">{{ formobj.email.errors.0 }}</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="{{ formobj.telephone.id_for_label }}" class="col-sm-2 control-label">{{ formobj.telephone.label }}</label>
+          <div class="col-sm-8">
+            {{ formobj.telephone }}
+            <span class="help-block">{{ formobj.telephone.errors.0 }}</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">{{ formobj.head_img.label }}</label>
+          <div class="col-sm-8">
+            <label for="{{ formobj.head_img.id_for_label }}" class="col-sm-2 control-label">
+              <img id="head-img" src="/static/blog/image/headimg.jpg" style="height:100px; width:100px;">
+            </label>
+            {{ formobj.head_img }}
+            <span class="help-block"></span>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <input type="submit" class="btn btn-success" value="用户注册">
+            <a href="/" class="btn btn-success">返回首页</a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<script src="{% static 'jquery-3.6.4.min.js' %}"></script>
+<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+<script>
+  $('#id_head_img').change(function() {
+    var filerd = new FileReader();
+    filerd.readAsDataURL(this.files[0]);
+    filerd.onload = function() {
+      $('#head-img').attr('src', filerd.result);
+    };
+  });
+</script>
+</body>
+</html>

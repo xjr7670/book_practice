@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Add Person</title>
+    {% load static %}
+</head>
+<body>
+    <div align="center">
+        <h1>增加人员</h1>
+        <hr>
+        <form method="post" action="/test_view/add_person/" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div>
+                <label>姓名：</label>
+                <input type="text" name="name" id="name">
+            </div>
+            <br>
+            <div>
+                <label>邮箱：</label>
+                <input type="text" name="email" id="email">
+            </div>
+            <br>
+            <div>
+                <label>性别：</label>
+                <select name="gender">
+                    <option value="1">男</option>
+                    <option value="2">女</option>
+                </select>
+            </div>
+            <br>
+            <div>
+                <label for="head_img">头像：<img id="imgforshow" src="/static/media/default_header.jpg" style="height:60px; width:60px;"></label>
+                <input type="file" name="head_img" id="head_img" style="display:none">
+            </div>
+            <br>
+            <div>
+                <label>附件：</label>
+                <input type="file" name="attachment" id="attachment">
+            </div>
+            <br>
+            <div><input type="submit" value="增加"></div>
+        </form>
+    </div>
+    <script src="{% static 'jquery-3.6.4.min.js' %}"></script>
+    <script type="text/javascript">
+        $("#head_img").change(function() {
+            var rd_img = new FileReader();
+            rd_img.readAsDataURL(this.files[0]);
+            rd_img.onload = function() {
+                $("#imgforshow").attr("src", rd_img.result);
+            };
+        });
+    </script>
+</body>
+</html>

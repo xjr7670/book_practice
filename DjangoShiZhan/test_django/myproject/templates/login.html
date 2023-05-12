@@ -1,0 +1,26 @@
+{% load static %}
+<html lang="zh-CN">
+<head>
+  <title>Login page</title>
+  <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'sigin.css' %}" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'fontawesome/css/font-awesome.min.css' %}">
+  <script src="{% static 'jquery-3.6.4.min.js' %}"></script>
+  <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+</head>
+<body>
+  <div class="container">
+    <form class="form-signin" method="post" action="">
+      {% csrf_token %}
+      <h2 class="form-signin-heading">Please login</h2>
+      <p></p><p></p>
+      <label for="username" class="sr-only">Username</label>
+      <input type="text" id="username" name="username" class="form-control" placeholder="User" required autofocus>
+      <p></p><p></p>
+      <label for="password" class="sr-only">Password</label>
+      <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+    </form>
+  </div> <!-- container -->
+</body>
+</html>

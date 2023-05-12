@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Person</title>
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+</head>
+<body>
+<div class="container">
+  <div class="row">
+    <div class="col-md-offset-3 col-md-6">
+      <div class="page-header">
+        <h1>Django Form and Ajax Test<small>--Add</small></h1>
+      </div>
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">Add</h3>
+        </div>
+        <div class="panel-body">
+          <form action="/test_ajax/add_person/" method="post" class="form-horizontal" novalidate>
+            {% csrf_token %}
+            {{ formobj.id }}
+            <div class="form-group">
+              <label for="{{ formobj.name.id_for_label }}" class="col-md-2 control-label">
+                {{ formobj.name.label }}
+              </label>
+              <div class="col-md-8">
+                {{ formobj.name }}
+                <span class="help-block">{{ formobj.name.errors.0 }}</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="{{ formobj.email.id_for_label }}" class="col-md-2 control-label">
+                {{ formobj.email.label }}
+              </label>
+              <div class="col-md-8">
+                {{ formobj.email }}
+                <span class="help-block">{{ formobj.email.errors.0 }}</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="{{ formobj.salary.id_for_label }}" class="col-md-2 control-label">
+                {{ formobj.salary.label }}
+              </label>
+              <div class="col-md-8">
+                {{ formobj.salary }}
+                <span class="help-block">{{ formobj.salary.errors.0 }}</span>
+              </div>
+            </div>
+            <div align="center">
+              <input type="button" class="btn btn-primary" value="Add" id="add_button">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="{% static 'jquery-3.6.4.min.js' %}"></script>
+<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+<script>
+  $("form input").focus(function() {
+    $(this).next("span").text("").parent().parent().removeClass("has-error");
+  });
+
+  $("#add_button").click(function(){
+    var formData = new FormData();
+    formData.append("name", $("#id_name").val());
+    formData.append("email", $("#id_email").val());
+    formData.append("salary", $("#id_salary").val());
+    formData.append("csrfmiddlewaretoken", $("[name='csrfmiddlewaretoken']").val());
+
+    $.ajax({
+      url: "/test_ajax/add_person/",
+      type: "post",
+      processData: false,
+      contentType: false,
+      data: formData,
+      success: function(data) {
+        if(data.status) {
+          $.each(data.url_or_msg, function(k, v) {
+            $("#id_"+k).next("span").text(v[0]).parent().parent().addClass("has-error");
+          })
+        } else {
+          location.href = data.url_or_msg;
+        }
+      }
+    })
+  });
+
+  $("#id_name").on("blur", function() {
+    var name = $(this).val();
+    $.ajax({
+      url: "/test_ajax/test_name/",
+      type: "get",
+      data: {"name": name},
+      success: function(data) {
+        if (data.status) {
+          $("#id_name").next("span").text(data.message).parent().parent().addClass("has-error");
+        }
+      }
+    });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+{% extends 'test_auth/base.html' %}
+{% block content %}
+<div align="center">
+  <h2>View Department</h2>
+  <p></p>
+  <table border="1" width="600px">
+    <thead>
+    <th>Number</th>
+    <th>Name</th>
+    <th>Career</th>
+    <th>Allow</th>
+    </thead>
+    <tbody>
+    {% for row in data_list %}
+    <tr>
+      <td>{{ row.id }}</td>
+      <td>{{ row.name }}</td>
+      <td>{{ row.work }}</td>
+      <td>
+        {% if perms.test_auth.department_edit %}
+        <a href="/test_auth/department/edit/1/">Edit</a>
+        {% endif %}
+        {% if perms.test_auth.department_del %}
+        <a href="/test_auth/department/del/1/">Del</a>
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  <br>
+  {% if perms.test_auth.department_add %}
+  <a href="/test_auth/department/add/">Add Department</a>
+  {% endif %}
+</div>
+{% endblock %}

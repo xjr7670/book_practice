@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width">
+    <meta name="descript" content="">
+    <meta name="author" content="">
+    <title>车费管理系统</title>
+    <link rel="icon" href="{% static 'favicon.ico' %}">
+    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'dashboard.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'fontawesome/css/font-awesome.min.css' %}">
+    <script src="{% static 'jquery-3.6.4.min.js' %}"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'rbac/rbac.css' %}">
+    <script src="{% static 'rbac/rbac.js' %}"></script>
+</head>
+<body>
+<div class="container-fluid">
+  <div class="row">
+    <div>
+      {% include 'header.html' %}
+    </div>
+  </div>
+  <div class="row" style="margin-top: 60px">
+    {% rbac_menu request %}
+    <div class="col-sm8 col-sm-offset-4 col-md-10 col-md-offset-2 main">
+      {% block page_content %}
+      {% endblock %}
+    </div>
+  </div>
+</div>
+</body>
+</html>
