@@ -1,0 +1,10 @@
+E:\code\C#\Ch10CardClient\obj\Debug\Ch10CardClient.csproj.CoreCompileInputs.cache
+E:\code\C#\Ch10CardClient\bin\Debug\Ch10CardClient.exe.config
+E:\code\C#\Ch10CardClient\bin\Debug\Ch10CardClient.exe
+E:\code\C#\Ch10CardClient\bin\Debug\Ch10CardClient.pdb
+E:\code\C#\Ch10CardClient\bin\Debug\Ch10CardLib.dll
+E:\code\C#\Ch10CardClient\bin\Debug\Ch10CardLib.pdb
+E:\code\C#\Ch10CardClient\obj\Debug\Ch10CardClient.csproj.AssemblyReference.cache
+E:\code\C#\Ch10CardClient\obj\Debug\Ch10CardClient.csproj.CopyComplete
+E:\code\C#\Ch10CardClient\obj\Debug\Ch10CardClient.exe
+E:\code\C#\Ch10CardClient\obj\Debug\Ch10CardClient.pdb

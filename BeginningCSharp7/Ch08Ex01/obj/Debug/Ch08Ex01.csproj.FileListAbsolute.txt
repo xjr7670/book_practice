@@ -1,0 +1,15 @@
+E:\code\C#\Ch08Ex01\bin\Debug\Ch08Ex01.exe.config
+E:\code\C#\Ch08Ex01\bin\Debug\Ch08Ex01.exe
+E:\code\C#\Ch08Ex01\bin\Debug\Ch08Ex01.pdb
+E:\code\C#\Ch08Ex01\obj\Debug\Ch08Ex01.csproj.AssemblyReference.cache
+E:\code\C#\Ch08Ex01\obj\Debug\MainWindow.g.cs
+E:\code\C#\Ch08Ex01\obj\Debug\App.g.cs
+E:\code\C#\Ch08Ex01\obj\Debug\Ch08Ex01_MarkupCompile.cache
+E:\code\C#\Ch08Ex01\obj\Debug\Ch08Ex01_MarkupCompile.lref
+E:\code\C#\Ch08Ex01\obj\Debug\MainWindow.baml
+E:\code\C#\Ch08Ex01\obj\Debug\Ch08Ex01.g.resources
+E:\code\C#\Ch08Ex01\obj\Debug\Ch08Ex01.Properties.Resources.resources
+E:\code\C#\Ch08Ex01\obj\Debug\Ch08Ex01.csproj.GenerateResource.cache
+E:\code\C#\Ch08Ex01\obj\Debug\Ch08Ex01.csproj.CoreCompileInputs.cache
+E:\code\C#\Ch08Ex01\obj\Debug\Ch08Ex01.exe
+E:\code\C#\Ch08Ex01\obj\Debug\Ch08Ex01.pdb

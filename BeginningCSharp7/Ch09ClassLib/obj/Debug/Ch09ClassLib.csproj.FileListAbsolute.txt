@@ -1,0 +1,5 @@
+E:\code\C#\Ch09ClassLib\bin\Debug\Ch09ClassLib.dll
+E:\code\C#\Ch09ClassLib\bin\Debug\Ch09ClassLib.pdb
+E:\code\C#\Ch09ClassLib\obj\Debug\Ch09ClassLib.csproj.CoreCompileInputs.cache
+E:\code\C#\Ch09ClassLib\obj\Debug\Ch09ClassLib.dll
+E:\code\C#\Ch09ClassLib\obj\Debug\Ch09ClassLib.pdb

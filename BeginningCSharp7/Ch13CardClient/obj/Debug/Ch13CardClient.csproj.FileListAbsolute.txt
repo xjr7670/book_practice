@@ -1,0 +1,9 @@
+E:\code\C#\Ch13CardClient\obj\Debug\Ch13CardClient.csproj.AssemblyReference.cache
+E:\code\C#\Ch13CardClient\obj\Debug\Ch13CardClient.csproj.CoreCompileInputs.cache
+E:\code\C#\Ch13CardClient\bin\Debug\Ch13CardClient.dll
+E:\code\C#\Ch13CardClient\bin\Debug\Ch13CardClient.pdb
+E:\code\C#\Ch13CardClient\bin\Debug\Ch11CardLib.dll
+E:\code\C#\Ch13CardClient\bin\Debug\Ch11CardLib.pdb
+E:\code\C#\Ch13CardClient\obj\Debug\Ch13CardClient.csproj.CopyComplete
+E:\code\C#\Ch13CardClient\obj\Debug\Ch13CardClient.dll
+E:\code\C#\Ch13CardClient\obj\Debug\Ch13CardClient.pdb

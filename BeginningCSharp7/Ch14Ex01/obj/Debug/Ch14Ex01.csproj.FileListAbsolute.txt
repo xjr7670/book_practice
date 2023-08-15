@@ -1,0 +1,15 @@
+E:\code\book_practice\BeginningCSharp7\Ch14Ex01\bin\Debug\Ch14Ex01.exe.config
+E:\code\book_practice\BeginningCSharp7\Ch14Ex01\bin\Debug\Ch14Ex01.exe
+E:\code\book_practice\BeginningCSharp7\Ch14Ex01\bin\Debug\Ch14Ex01.pdb
+E:\code\book_practice\BeginningCSharp7\Ch14Ex01\obj\Debug\Ch14Ex01.csproj.AssemblyReference.cache
+E:\code\book_practice\BeginningCSharp7\Ch14Ex01\obj\Debug\MainWindow.g.cs
+E:\code\book_practice\BeginningCSharp7\Ch14Ex01\obj\Debug\App.g.cs
+E:\code\book_practice\BeginningCSharp7\Ch14Ex01\obj\Debug\Ch14Ex01_MarkupCompile.cache
+E:\code\book_practice\BeginningCSharp7\Ch14Ex01\obj\Debug\Ch14Ex01_MarkupCompile.lref
+E:\code\book_practice\BeginningCSharp7\Ch14Ex01\obj\Debug\MainWindow.baml
+E:\code\book_practice\BeginningCSharp7\Ch14Ex01\obj\Debug\Ch14Ex01.g.resources
+E:\code\book_practice\BeginningCSharp7\Ch14Ex01\obj\Debug\Ch14Ex01.Properties.Resources.resources
+E:\code\book_practice\BeginningCSharp7\Ch14Ex01\obj\Debug\Ch14Ex01.csproj.GenerateResource.cache
+E:\code\book_practice\BeginningCSharp7\Ch14Ex01\obj\Debug\Ch14Ex01.csproj.CoreCompileInputs.cache
+E:\code\book_practice\BeginningCSharp7\Ch14Ex01\obj\Debug\Ch14Ex01.exe
+E:\code\book_practice\BeginningCSharp7\Ch14Ex01\obj\Debug\Ch14Ex01.pdb
