@@ -1,60 +1,86 @@
-# -*- coding:utf-8 -*-
+# -*- coding: utf-8 -*-
+import json
+import sys
+import uuid
+import requests
+import hashlib
+import time
+from importlib import reload
 
-import socket
+import time
 
-
-def index(url):
-    with open('index.html', 'r', encoding='utf-8') as f:
-        rd = f.read()
-        rd = rd.replace('$@index$@', 'Home')
-    return bytes(rd, encoding='utf-8')
-
-
-def test(url):
-    with open('test.html', 'r', encoding='utf-8') as f:
-        rd = f.read()
-        rd = rd.replace('$@test$@', 'test')
-    return bytes(rd, encoding='utf-8')
+reload(sys)
 
 
-def fun404(url):
-    ret = '<h1>not found!</h1>'
-    return bytes(ret, encoding='utf-8')
+class YoudaoTranslator(object):
+
+    def __init__(self):
+        self.youdao_url = 'https://openapi.youdao.com/api'
+        self.APP_KEY = '5ff5a86fc6c32a9f'
+        self.APP_SECRET = 'FvxaXPuWGKdjrBVzC8hIGI2A6AxKbbmn'
+
+    @staticmethod
+    def encrypt(signStr):
+        hash_algorithm = hashlib.sha256()
+        hash_algorithm.update(signStr.encode('utf-8'))
+        return hash_algorithm.hexdigest()
+
+    @staticmethod
+    def truncate(q):
+        if q is None:
+            return None
+        size = len(q)
+        return q if size <= 20 else q[0:10] + str(size) + q[size - 10:size]
+
+    def do_request(self, data):
+        headers = {'Content-Type': 'application/x-www-form-urlencoded'}
+        return requests.post(self.youdao_url, data=data, headers=headers)
+
+    def do_translate(self, q):
+        data = {}
+        data['from'] = 'en'
+        data['to'] = 'zh-CHS'
+        data['signType'] = 'v3'
+        curtime = str(int(time.time()))
+        data['curtime'] = curtime
+        salt = str(uuid.uuid1())
+        signStr = self.APP_KEY + self.truncate(q) + salt + curtime + self.APP_SECRET
+        sign = self.encrypt(signStr)
+        data['appKey'] = self.APP_KEY
+        data['q'] = q
+        data['salt'] = salt
+        data['sign'] = sign
+        data['vocabId'] = "您的用户词表ID"
+
+        response = self.do_request(data)
+        contentType = response.headers['Content-Type']
+        if contentType == "audio/mp3":
+            millis = int(round(time.time() * 1000))
+            filePath = "合成的音频存储路径" + str(millis) + ".mp3"
+            fo = open(filePath, 'wb')
+            fo.write(response.content.decode('utf-8'))
+            fo.close()
+        else:
+            resp = response.json()
+            ret = []
+            if resp['errorCode'] == '0':
+                explain = resp['basic']['explains']
+
+                if explain:
+                    translation = '\n'.join(explain).replace('；', '\n')
+                else:
+                    translation = '.'.join(resp['translation'])
+                ret.append(translation)
+                for item in resp['web']:
+                    ret.append(f'{item["key"]}: {".".join(item["value"])}')
+                ret.append(f'us-phonetic: {resp["basic"]["us-phonetic"]}')
+                print(ret)
+                return '\n'.join(ret)
+            else:
+                return None
 
 
-url_func = [
-    ('/index/', index),
-    ('/test/', test),
-]
-
-sk = socket.socket()
-sk.bind(('127.0.0.1', 8000))
-sk.listen()
-print('socket server is running ...')
-
-while True:
-    conn, addr = sk.accept()
-    print('\nThe request ip address is : ', addr)
-    data = conn.recv(1024)
-    print(data)
-    if not data:
-        continue
-    data_str = str(data, encoding='utf-8')
-    line = data_str.split('\r\n')
-    v1 = line[0].split()
-    url = v1[1]
-    conn.send(b'HTTP/1.1 200 OK\r\n\r\n')
-    func = None
-    for i in url_func:
-        if i[0] == url:
-            func = i[1]
-            break
-
-    if func:
-        func = func
-    else:
-        func = fun404
-
-    rep = func(url)
-    conn.send(rep)
-    conn.close()
+if __name__ == '__main__':
+    word = 'system'
+    translator = YoudaoTranslator()
+    translator.do_translate(word)
