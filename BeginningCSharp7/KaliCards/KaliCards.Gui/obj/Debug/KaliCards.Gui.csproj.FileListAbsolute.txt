@@ -1,0 +1,17 @@
+E:\code\book_practice\BeginningCSharp7\KaliCards\KaliCards.Gui\bin\Debug\KaliCards.Gui.exe.config
+E:\code\book_practice\BeginningCSharp7\KaliCards\KaliCards.Gui\bin\Debug\KaliCards.Gui.exe
+E:\code\book_practice\BeginningCSharp7\KaliCards\KaliCards.Gui\bin\Debug\KaliCards.Gui.pdb
+E:\code\book_practice\BeginningCSharp7\KaliCards\KaliCards.Gui\obj\Debug\KaliCards.Gui.csproj.AssemblyReference.cache
+E:\code\book_practice\BeginningCSharp7\KaliCards\KaliCards.Gui\obj\Debug\AboutWindow.g.cs
+E:\code\book_practice\BeginningCSharp7\KaliCards\KaliCards.Gui\obj\Debug\MainWindow.g.cs
+E:\code\book_practice\BeginningCSharp7\KaliCards\KaliCards.Gui\obj\Debug\App.g.cs
+E:\code\book_practice\BeginningCSharp7\KaliCards\KaliCards.Gui\obj\Debug\KaliCards.Gui_MarkupCompile.cache
+E:\code\book_practice\BeginningCSharp7\KaliCards\KaliCards.Gui\obj\Debug\KaliCards.Gui_MarkupCompile.lref
+E:\code\book_practice\BeginningCSharp7\KaliCards\KaliCards.Gui\obj\Debug\AboutWindow.baml
+E:\code\book_practice\BeginningCSharp7\KaliCards\KaliCards.Gui\obj\Debug\MainWindow.baml
+E:\code\book_practice\BeginningCSharp7\KaliCards\KaliCards.Gui\obj\Debug\KaliCards.Gui.g.resources
+E:\code\book_practice\BeginningCSharp7\KaliCards\KaliCards.Gui\obj\Debug\KaliCards.Gui.Properties.Resources.resources
+E:\code\book_practice\BeginningCSharp7\KaliCards\KaliCards.Gui\obj\Debug\KaliCards.Gui.csproj.GenerateResource.cache
+E:\code\book_practice\BeginningCSharp7\KaliCards\KaliCards.Gui\obj\Debug\KaliCards.Gui.csproj.CoreCompileInputs.cache
+E:\code\book_practice\BeginningCSharp7\KaliCards\KaliCards.Gui\obj\Debug\KaliCards.Gui.exe
+E:\code\book_practice\BeginningCSharp7\KaliCards\KaliCards.Gui\obj\Debug\KaliCards.Gui.pdb
