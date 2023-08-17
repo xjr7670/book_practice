@@ -19,16 +19,18 @@
             <Label Content="Options" Canvas.Right="10" Canvas.Top="13" FontWeight="Bold" FontSize="24" Foreground="#FFF7EFEF" FontFamily="Times New Roman" />
         </Canvas>
         <Canvas Grid.Row="1" Background="Black">
+            <Canvas.Resources>
+                <local:NumberOfPlayers x:Key="numberOfPlayersData" />
+            </Canvas.Resources>
+            
             <TabControl Grid.Row="1" Canvas.Top="2" Canvas.Left="10" Grid.RowSpan="2" Width="408" Height="208"  >
                 <TabItem Header="Game">
                     <Grid Background="#FFE5E5E5">
                         <CheckBox Content="Play against computer" HorizontalAlignment="Left" Margin="11,33,0,0" VerticalAlignment="Top" Name="playAgainstComputerCheck"></CheckBox>
                         <Label Content="Number of players" HorizontalAlignment="Left" Margin="10,54,0,0" VerticalAlignment="Top" />
                         <ComboBox HorizontalAlignment="Left" Margin="196,58,0,0" VerticalAlignment="Top" Width="86" Name="numberOfPlayersComboBox" 
-                                 SelectedIndex="0">
-                            <ComboBoxItem>2</ComboBoxItem>
-                            <ComboBoxItem>3</ComboBoxItem>
-                            <ComboBoxItem>4</ComboBoxItem>
+                                 SelectedIndex="0" ItemsSource="{Binding Source={StaticResource numberOfPlayersData}}" >
+                            
                         </ComboBox>
                     </Grid>
                 </TabItem>
