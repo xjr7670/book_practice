@@ -29,7 +29,8 @@
                         <CheckBox Content="Play against computer" HorizontalAlignment="Left" Margin="11,33,0,0" VerticalAlignment="Top" Name="playAgainstComputerCheck"></CheckBox>
                         <Label Content="Number of players" HorizontalAlignment="Left" Margin="10,54,0,0" VerticalAlignment="Top" />
                         <ComboBox HorizontalAlignment="Left" Margin="196,58,0,0" VerticalAlignment="Top" Width="86" Name="numberOfPlayersComboBox" 
-                                 SelectedIndex="0" ItemsSource="{Binding Source={StaticResource numberOfPlayersData}}" >
+                                  ItemsSource="{Binding Source={StaticResource numberOfPlayersData}}"
+                                  SelectedValue="{Binding Path=NumberOfPlayers}">
                             
                         </ComboBox>
                     </Grid>
