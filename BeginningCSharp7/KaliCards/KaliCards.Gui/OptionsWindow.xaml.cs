@@ -40,6 +40,7 @@ namespace KaliCards.Gui
                     gameOptions = new GameOptions();
                 }
             }
+            DataContext = gameOptions;
             InitializeComponent();
         }
 
