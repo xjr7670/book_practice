@@ -26,10 +26,11 @@
             <TabControl Grid.Row="1" Canvas.Top="2" Canvas.Left="10" Grid.RowSpan="2" Width="408" Height="208"  >
                 <TabItem Header="Game">
                     <Grid Background="#FFE5E5E5">
-                        <CheckBox Content="Play against computer" HorizontalAlignment="Left" Margin="11,33,0,0" VerticalAlignment="Top" Name="playAgainstComputerCheck"></CheckBox>
+                        <CheckBox Content="Play against computer" HorizontalAlignment="Left" Margin="11,33,0,0" VerticalAlignment="Top" Name="playAgainstComputerCheck" IsChecked="{Binding Path=PlayAgainstComputer}" ></CheckBox>
                         <Label Content="Number of players" HorizontalAlignment="Left" Margin="10,54,0,0" VerticalAlignment="Top" />
                         <ComboBox HorizontalAlignment="Left" Margin="196,58,0,0" VerticalAlignment="Top" Width="86" Name="numberOfPlayersComboBox" 
-                                 SelectedIndex="0" ItemsSource="{Binding Source={StaticResource numberOfPlayersData}}" >
+                                 ItemsSource="{Binding Source={StaticResource numberOfPlayersData}}"
+                                  SelectedValue="{Binding Path=NumberOfPlayers}">
                             
                         </ComboBox>
                     </Grid>
