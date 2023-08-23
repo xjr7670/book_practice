@@ -1,0 +1,23 @@
+﻿<Window x:Class="KaliCards.Gui.Chapter14Practice"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KaliCards.Gui"
+        mc:Ignorable="d"
+        Title="Chapter14Practice" Height="450" Width="400">
+
+    <Grid>
+        <Slider x:Name="slider" Minimum="{Binding Path=MinValue}" Maximum="{Binding Path=MaxValue}" Value="{Binding Path=CurrentValue}" Orientation="Vertical" />
+        <ProgressBar  Maximum="{Binding MaxWidth, ElementName=slider}" Minimum="{Binding Minimum, ElementName=slider}" Margin="47,182,59,154" Value="{Binding Value, ElementName=slider}" RenderTransformOrigin="0.5,0.5" >
+            <ProgressBar.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-49.086"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </ProgressBar.RenderTransform>
+        </ProgressBar>
+    </Grid>
+</Window>

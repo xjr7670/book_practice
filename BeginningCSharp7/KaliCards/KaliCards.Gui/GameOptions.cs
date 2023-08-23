@@ -30,7 +30,11 @@ namespace KaliCards.Gui
             }
         }
 
+<<<<<<< HEAD
         public void AddPlayers(string playerName)
+=======
+        public void AddPlayer(string playerName)
+>>>>>>> f5e0c5d1a9fb1b3520180d9fd1f746dba9565cba
         {
             if (playerNames.Contains(playerName))
             {
@@ -52,7 +56,11 @@ namespace KaliCards.Gui
 
         public bool PlayAgainstComputer
         {
+<<<<<<< HEAD
             get { return playAgainstComputer; }
+=======
+            get => playAgainstComputer;
+>>>>>>> f5e0c5d1a9fb1b3520180d9fd1f746dba9565cba
             set
             {
                 playAgainstComputer = value;
