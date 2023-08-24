@@ -9,27 +9,32 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="58"/>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="20"/>
             <RowDefinition />
             <RowDefinition Height="42"/>
         </Grid.RowDefinitions>
-        <Canvas Grid.Row="0" Background="#C40D42">
-            <Image Height="56" Canvas.Left="0" Canvas.Top="0" Width="100" Stretch="UniformToFill" Source="Banner.png" />
-            <Label Content="New Game" Canvas.Right="10" Canvas.Top="13" FontWeight="Bold" FontSize="24" Foreground="#FFF7EFEF" FontFamily="Times New Roman" />
+        <Canvas Grid.Row="0" Background="#C40D42" >
+            <Image Height="56" Canvas.Left="0" Canvas.Top="0" Stretch="UniformToFill" Source=".\Images\Banner.png"/>
+            <Label Canvas.Right="10" Canvas.Top="13" Content="New Game" Foreground="#FFF7EFEF" 
+FontFamily="Times New Roman" FontSize="24" FontWeight="Bold" />
+
         </Canvas>
-        <Canvas Grid.Row="1" Background="Black"></Canvas>
-        <ListBox Height="155" Width="227" ItemsSource="{Binding Path=PlayerNames}" SelectionChanged="playerNamesListBox_SelectionChanged" 
-                 Margin="10,31,0,0" x:Name="playerNamesListBox"
-                 Grid.Row="2" VerticalAlignment="Top" HorizontalAlignment="Left"  />
-        <Label x:Name="label" Content="Players" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,5,0,0" Grid.Row="2" />
-        <Label x:Name="label1" Content="New Player" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="252,0,0,0" Grid.Row="2"  />
-        <TextBox Height="23" Width="166" x:Name="newPlayerTextBox" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="2" TextWrapping="Wrap" Margin="252,31,0,0"  />
-        <Button Content="Add" x:Name="addNewPlayerButton" Click="addNewPlayerButton_Click" HorizontalAlignment="Left" VerticalAlignment="Top"
-                Grid.Row="2" Width="64" Margin="354,59,0,0" />
+        <Canvas Grid.Row="1" Background="Black" >
+
+        </Canvas>
         
+        <Label x:Name="label" Content="Players" HorizontalAlignment="Left" Margin="10,5,0,0" Grid.Row="2" VerticalAlignment="Top"/>
+        <Label x:Name="label1" Content="New Player" HorizontalAlignment="Left" Margin="252,0,0,0" Grid.Row="2" VerticalAlignment="Top"/>
+        <ListBox x:Name="playerNamesListBox" HorizontalAlignment="Left" Height="155" Margin="10,31,0,0" Grid.Row="2" VerticalAlignment="Top" Width="227" ItemsSource="{Binding Path=PlayerNames}" SelectionChanged="playerNamesListBox_SelectionChanged"/>
+        <Button x:Name="addNewPlayerButton" Content="Add" HorizontalAlignment="Left" Margin="354,59,0,0" Grid.Row="2" VerticalAlignment="Top" Width="64" Click="addNewPlayerButton_Click"/>
+        <TextBox x:Name="newPlayerTextBox" HorizontalAlignment="Left" Height="23" Margin="252,31,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="166"/>
+
         <StackPanel Grid.Row="3" Orientation="Horizontal" FlowDirection="RightToLeft">
-            <Button Content="_Cancel" Height="22" Margin="10,0,0,0" Width="75" Name="cancelButton" Click="cancelButton_Click"/>
-            <Button Content="_OK" IsEnabled="False" Height="22" Width="75" Margin="10,0,0,0" Name="okButton" Click="okButton_Click"/>
+            <Button Content="_Cancel" Height="22" Width="75" Margin="10,0,0,0" 
+              Name="cancelButton" Click="cancelButton_Click" />
+            <Button Content="_OK" Height="22" Width="75" Margin="10,0,0,0" 
+              Name="okButton" Click="okButton_Click" IsEnabled="False"/>
+
         </StackPanel>
 
 

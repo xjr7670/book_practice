@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 namespace KaliCards.Gui
 {
     /// <summary>
-    /// AboutWindow.xaml 的交互逻辑
+    /// Interaction logic for About.xaml
     /// </summary>
     public partial class AboutWindow : Window
     {

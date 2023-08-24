@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 
 namespace KaliCards.Gui
 {
     public class NumberOfPlayers : ObservableCollection<int>
     {
-        public NumberOfPlayers() : base()
+        public NumberOfPlayers()
+          : base()
         {
             Add(2);
             Add(3);
